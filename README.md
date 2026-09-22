@@ -6,8 +6,6 @@ language files (`StringTable.*.gst`).
 Pure PHP. No Firebird, no PHP extensions, no external programs. It runs on any shared
 host — Linux, Windows, PHP 7.4+.
 
-**Live instance:** <http://editor.kraineuolek.com/super-power-2/>
-
 **Guide and screenshots:** <https://oleksandrkhrashchevskyi.github.io/super-power-2-editor/>
 
 **Run it in your browser, no server:** <https://oleksandrkhrashchevskyi.github.io/super-power-2-editor/app/>
