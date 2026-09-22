@@ -27,7 +27,10 @@ assignees: ''
 **Environment**
 - Browser:
 - PHP version (shown in the footer):
-- Your own install or editor.kraineuolek.com:
+- Where you ran it:
+  - [ ] the in-browser edition on GitHub Pages
+  - [ ] your own copy on a host
+  - [ ] `php -S` locally
 
 **Screenshot** (very helpful for map problems)
 
