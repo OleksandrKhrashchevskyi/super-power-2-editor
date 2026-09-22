@@ -1,0 +1,41 @@
+/* Subset of Bootstrap Icons 1.13.1 (MIT) - only the glyphs this site uses. */
+@font-face{
+  font-family:"bootstrap-icons";
+  font-display:block;
+  src:url("fonts/bootstrap-icons.woff2") format("woff2");
+}
+.bi::before,[class^="bi-"]::before,[class*=" bi-"]::before{
+  display:inline-block;
+  font-family:"bootstrap-icons"!important;
+  font-style:normal;font-weight:normal!important;font-variant:normal;
+  text-transform:none;line-height:1;vertical-align:-.125em;
+  -webkit-font-smoothing:antialiased;
+}
+.bi-rocket-takeoff::before{content:"\f845"}
+.bi-folder2-open::before{content:"\f3d8"}
+.bi-speedometer2::before{content:"\f580"}
+.bi-table::before{content:"\f5aa"}
+.bi-pencil-square::before{content:"\f4ca"}
+.bi-diagram-3::before{content:"\f2ee"}
+.bi-globe-americas::before{content:"\f882"}
+.bi-flag::before{content:"\f3cc"}
+.bi-translate::before{content:"\f658"}
+.bi-bar-chart::before{content:"\f17e"}
+.bi-arrow-left-right::before{content:"\f12b"}
+.bi-shield::before{content:"\f53f"}
+.bi-cursor::before{content:"\f2e3"}
+.bi-diagram-2::before{content:"\f2ec"}
+.bi-arrow-repeat::before{content:"\f130"}
+.bi-clipboard-check::before{content:"\f28b"}
+.bi-binoculars::before{content:"\f18f"}
+.bi-clock-history::before{content:"\f292"}
+.bi-palette::before{content:"\f4b1"}
+.bi-phone::before{content:"\f4e7"}
+.bi-download::before{content:"\f30a"}
+.bi-shield-check::before{content:"\f52f"}
+.bi-book::before{content:"\f194"}
+.bi-github::before{content:"\f3ed"}
+.bi-box-arrow-up-right::before{content:"\f1c5"}
+.bi-check2::before{content:"\f272"}
+.bi-hdd-network::before{content:"\f40d"}
+.bi-code-slash::before{content:"\f2c6"}
