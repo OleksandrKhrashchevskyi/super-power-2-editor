@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SP2 DB Editor — guide (Deutsch)</title>
+<meta name="description" content="Alles, was der Editor kann, der Reihe nach und mit Screenshots.">
+<meta property="og:title" content="SP2 DB Editor — guide (Deutsch)">
+<meta property="og:description" content="Alles, was der Editor kann, der Reihe nach und mit Screenshots.">
+<meta property="og:type" content="website">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%234f8cff'/%3E%3Cg fill='%23fff'%3E%3Crect x='3' y='4' width='10' height='2' rx='.6'/%3E%3Crect x='3' y='7' width='10' height='2' rx='.6'/%3E%3Crect x='3' y='10' width='6' height='2' rx='.6'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/icons.css">
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="../index.html">SP2 DB Editor</a>
+  <nav>
+    <a href="../guide/index.html" class="on">Guide</a>
+    <a href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor">Source</a>
+    <a class="cta" href="http://editor.kraineuolek.com/super-power-2/">Open the editor</a>
+  </nav>
+</div></header>
+<div class="guide">
+<aside class="toc" aria-label="Contents"><ol><li><a href="#start">Erste Schritte</a></li><li><a href="#project">Ihr Projekt und sein Link</a></li><li><a href="#overview">Was der Datenbank-Reiter zeigt</a></li><li><a href="#table">Eine Tabelle durchsehen</a></li><li><a href="#edit">Eine Zeile bearbeiten</a></li><li><a href="#struct">Aufbau der Tabelle</a></li><li><a href="#map">Die Weltkarte</a></li><li><a href="#map-who">Wem was gehört</a></li><li><a href="#map-lang">Sprache und Religion</a></li><li><a href="#map-num">Regierung und Zahlen</a></li><li><a href="#map-rel">Beziehungen und Verträge</a></li><li><a href="#map-mil">Armeen, Raketen, Stärke</a></li><li><a href="#map-edit">Von der Karte aus bearbeiten</a></li><li><a href="#merge">Länder zusammenlegen</a></li><li><a href="#replace">Suchen und ersetzen</a></li><li><a href="#check">Die Datenbank prüfen</a></li><li><a href="#find">Globale Suche</a></li><li><a href="#log">Änderungsprotokoll und Rückgängig</a></li><li><a href="#gst">Sprachdateien (.gst)</a></li><li><a href="#ui">Darstellung</a></li><li><a href="#mobile">Auf dem Handy</a></li><li><a href="#save">Ihre Arbeit zurückholen</a></li><li><a href="#safety">Was er nicht tun wird</a></li></ol></aside>
+<main class="doc"><h1>SP2 DB Editor</h1><p class="lead">Alles, was der Editor kann, der Reihe nach und mit Screenshots.</p><div class="langbar"><a href="en.html" hreflang="en">English</a><a href="de.html" hreflang="de" class="on">Deutsch</a><a href="es.html" hreflang="es">Español</a><a href="fr.html" hreflang="fr">Français</a><a href="it.html" hreflang="it">Italiano</a><a href="nl.html" hreflang="nl">Nederlands</a><a href="pt.html" hreflang="pt">Português</a><a href="uk.html" hreflang="uk">Українська</a><a href="ru.html" hreflang="ru">Русский</a></div><section id="start"><h2><i class="bi bi-rocket-takeoff" aria-hidden="true"></i>Erste Schritte</h2>
+<p>Der Editor öffnet die Dateien des Spiels selbst. Es wird nichts installiert und
+    nichts umgewandelt: Er liest <code>DATABASE.GDB</code> — eine Firebird-1.5-Datenbank —
+    und die Textdateien <code>StringTable.*.gst</code> Byte für Byte, in reinem PHP.</p>
+<ol>
+     <li>Suchen Sie die Dateien des Spiels. Eine saubere Installation bewahrt sie in
+       <code>SuperPower 2\Extras\</code>; ein Mod legt seine eigene Kopie ab in
+       <code>SuperPower 2\MODS\&lt;Name des Mods&gt;\</code>.</li>
+     <li>Ziehen Sie <code>DATABASE.GDB</code> auf das Upload-Feld, oder klicken Sie es an
+       und wählen Sie die Datei aus.</li>
+     <li>Wechseln Sie auf den Reiter <strong>Sprachen</strong> und laden Sie auch eine
+       <code>StringTable.*.gst</code> hoch. Sie ist optional, aber ohne sie sind Länder
+       und Städte nur Zahlen.</li>
+   </ol>
+<p>Eine <code>.zip</code> mit mehreren dieser Dateien auf einmal geht ebenfalls: Die
+    Datenbank landet im einen Reiter, jede Sprachdatei im anderen.</p>
+<figure><img src="../assets/img/01-upload.webp" alt="Upload-Fenster" width="1280" height="729" loading="lazy" decoding="async"><figcaption>Datei fallen lassen oder anklicken und auswählen. Der Balken zeigt Megabyte und Tempo; die Seite öffnet sich von selbst, sobald der Upload fertig ist.</figcaption></figure>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>Ihre Dateien sind Kopien. Die Originale des Spiels werden nie angefasst — am Ende laden Sie die bearbeitete Kopie herunter.</p></div>
+</section>
+<section id="project"><h2><i class="bi bi-folder2-open" aria-hidden="true"></i>Ihr Projekt und sein Link</h2>
+<p>Es gibt keine Anmeldung. In dem Moment, in dem Sie die Seite öffnen, bekommen Sie
+    einen kurzen Projektcode, und alles, was Sie hochladen, landet in einem eigenen Ordner.
+    Zwei Leute können in derselben Minute ihre eigene <code>DATABASE.GDB</code> hochladen,
+    ohne sich gegenseitig ins Gehege zu kommen.</p>
+<p>Der Code steckt in einem Cookie, also denkt man im Normalfall nie an ihn. Er steht
+    auch im Link: Bewahren Sie diesen Link auf, und das Projekt öffnet sich auf einem
+    anderen Rechner, auf dem Handy oder nachdem die Cookies gelöscht wurden. Sie finden
+    ihn unten in der linken Leiste und auf der Startseite unter <em>Ihr Projekt</em>.</p>
+<figure><img src="../assets/img/22-project.webp" alt="Projektfenster" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Der Link zum Projekt, der Code, wie viel Platz es belegt, und eine Schaltfläche, die ein leeres Projekt beginnt.</figcaption></figure>
+<p>Ein Projekt wird sieben Tage nach dem letzten Besuch gelöscht. <strong>Schließen</strong>
+    nimmt eine Datei absichtlich aus dem Projekt heraus — eine Kopie bleibt ohnehin im
+    Ordner <code>backups</code> des Projekts.</p>
+</section>
+<section id="overview"><h2><i class="bi bi-speedometer2" aria-hidden="true"></i>Was der Datenbank-Reiter zeigt</h2>
+<p>Mit geöffneter Datenbank landen Sie auf einer Übersicht: wie viele Tabellen, Zeilen
+    und Spalten es gibt, welche Tabellen die großen sind, und Schnellzugriffe auf alles, was
+    sich zu tun lohnt.</p>
+<figure><img src="../assets/img/02-overview.webp" alt="Übersicht der Datenbank" width="1280" height="800" loading="lazy" decoding="async"><figcaption>SuperPower 2 liefert 28 Tabellen und rund 62 800 Zeilen mit. Die grüne Markierung links heißt, dass eine Sprachdatei angehängt ist — die Zahlen erscheinen also als Namen.</figcaption></figure>
+</section>
+<section id="table"><h2><i class="bi bi-table" aria-hidden="true"></i>Eine Tabelle durchsehen</h2>
+<p>Wählen Sie links eine Tabelle. Ein Klick auf eine Spaltenüberschrift sortiert. Die
+    Schaltfläche <strong>Filtern</strong> öffnet eine Reihe Felder unter den Überschriften:
+    Tippen Sie in eins hinein, und nur die passenden Zeilen bleiben stehen.</p>
+<figure><img src="../assets/img/03-table.webp" alt="Tabelle COUNTRY" width="1280" height="800" loading="lazy" decoding="async"><figcaption>COUNTRY, 194 Zeilen und 86 Spalten. Unter NAME_STID schreibt der Editor den echten Namen aus der Sprachdatei — die Datenbank selbst hält nur 2136 fest.</figcaption></figure>
+<ul>
+     <li><span class="badge text-bg-secondary">IDX</span> kennzeichnet eine Spalte, die
+       Indizes benutzen. Die sind schreibgeschützt, und der nächste Abschnitt erklärt,
+       warum.</li>
+     <li><span class="badge text-bg-secondary">TXT</span> kennzeichnet eine Spalte, die in
+       die Sprachdatei zeigt. Der Name unter der Zahl kommt von dort.</li>
+     <li>Große Tabellen werden auf Seiten verteilt; die Seitengröße wählen Sie unten selbst.</li>
+   </ul>
+</section>
+<section id="edit"><h2><i class="bi bi-pencil-square" aria-hidden="true"></i>Eine Zeile bearbeiten</h2>
+<p>Der Stift am Anfang einer Zeile öffnet alle ihre Felder in einem Fenster. Es gibt ein
+    Suchfeld, denn manche Tabellen haben über zweihundert Spalten. <strong>Speichern</strong>
+    schreibt die Werte unmittelbar in die <code>.gdb</code>.</p>
+<figure><img src="../assets/img/04-edit-row.webp" alt="Zeileneditor" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Jedes Feld zeigt seinen Typ und, bei Textspalten, die Zeile aus der Sprachdatei. NULL hat einen eigenen Schalter, denn leer und „nicht gesetzt“ sind für das Spiel zweierlei.</figcaption></figure>
+<div class="note"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i><p>Felder, auf denen Indizes aufbauen — <code>ID</code> in fast jeder SP2-Tabelle — lassen sich nicht ändern. Ein Index ist ein eigener Schlüsselbaum in der Datei: Ändern Sie den Wert, ohne den Baum neu zu bauen, liest das Spiel die falschen Zeilen. Zeilen hinzufügen und löschen ist aus demselben Grund gesperrt.</p></div>
+</section>
+<section id="struct"><h2><i class="bi bi-diagram-3" aria-hidden="true"></i>Aufbau der Tabelle</h2>
+<p><strong>Struktur</strong> listet die Spalten einer Tabelle mit ihren echten
+    Firebird-Typen, Offsets und Domänen auf und weist auf die hin, die nach Verweisen auf
+    andere Tabellen aussehen. Nützlich, wenn Sie herausfinden wollen, was eine Spalte
+    eigentlich bedeutet.</p>
+<figure><img src="../assets/img/05-structure.webp" alt="Aufbau von COUNTRY" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Die Typen so, wie Firebird selbst sie ablegt. Die Spalte Hinweise markiert wahrscheinliche Verweise, Indexzugehörigkeit und Textzeiger.</figcaption></figure>
+<p>Dieselbe Liste gibt es als Datei: <em>Schema-JSON</em> in der linken Leiste
+    übergibt Ihnen das ganze Schema für Ihre eigenen Skripte.</p>
+</section>
+<section id="map"><h2><i class="bi bi-globe-americas" aria-hidden="true"></i>Die Weltkarte</h2>
+<p>In der Datenbank steckt keine Karte. SuperPower 2 hält 2 604 Regionen und 3 347
+    Städte fest, jede Stadt mit Breiten- und Längengrad — der Editor zeichnet eine Region
+    also als den Boden, der ihren eigenen Städten näher ist als denen aller anderen, und
+    beschneidet das Ergebnis dann an echten Küsten und Grenzen.</p>
+<p>Darum sind die Formen nah dran, aber nicht exakt, und darum sagt die Karte das in der
+    Zeile unter dem Bild auch offen. Ganz genau richtig ist, worauf es hier ankommt:
+    <em>welche Region wem gehört</em>, direkt aus der Tabelle, die Sie gerade bearbeiten.</p>
+</section>
+<section id="map-who"><h2><i class="bi bi-flag" aria-hidden="true"></i>Wem was gehört</h2>
+<figure><img src="../assets/img/06-map-country.webp" alt="Karte nach Ländern eingefärbt" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Jede Region in der Farbe ihres Besitzers. Die Legende nennt die größten; der Rest klappt sich zu „und 180 weitere“ zusammen.</figcaption></figure>
+<p>Fahren Sie über eine Region, und die Kurzinfo nennt Region, Besitzer und Hauptstadt.
+    Ziehen verschiebt, das Mausrad zoomt, und das Feld neben der Ebenenliste hebt ein
+    einzelnes Land hervor: So sehen Sie sein Gebiet auf einen Blick, samt der Stücke, die
+    auf anderen Kontinenten liegen.</p>
+</section>
+<section id="map-lang"><h2><i class="bi bi-translate" aria-hidden="true"></i>Sprache und Religion</h2>
+<p>Die Liste <strong>Einfärben nach</strong> links oben ändert, was die Farben bedeuten. Sprache und Religion
+    kommen aus den Tabellen <code>LANGUAGES</code> und <code>RELIGIONS</code>, die je
+    Region einen Anteil für jede Sprache und jedes Bekenntnis halten — die Karte malt das
+    mit dem größten Anteil.</p>
+<figure><img src="../assets/img/07-map-language.webp" alt="Vorherrschende Sprache" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Vorherrschende Sprache je Region.</figcaption></figure>
+<figure><img src="../assets/img/08-map-religion.webp" alt="Vorherrschende Religion" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Vorherrschende Religion je Region.</figcaption></figure>
+<p>Zwei weitere Ebenen zeigen den <em>Anteil</em> einer ausgewählten Sprache oder eines
+    Bekenntnisses als Verlauf — der schnellste Weg, die Regionen zu finden, die ein Mod
+    vergessen hat.</p>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>Diese Ebenen zeigen die Daten des Spiels, nicht die wirkliche Welt — und die Daten des Spiels haben ihre Eigenheiten. Als vorherrschende Sprache Brasiliens kommt Englisch heraus, für die Ukraine Russisch. Genau das steht in <code>DATABASE.GDB</code>, und nun können Sie es sehen und richtigstellen.</p></div>
+</section>
+<section id="map-num"><h2><i class="bi bi-bar-chart" aria-hidden="true"></i>Regierung und Zahlen</h2>
+<figure><img src="../assets/img/09-map-government.webp" alt="Regierungsform" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Regierungsform je Land, aus GVT_TYPE.</figcaption></figure>
+<p>Zahlenebenen — Bevölkerung, Infrastruktur, Stand der Telekommunikation — verwenden
+    einen einzigen Verlauf, mit dem kleinsten, dem mittleren und dem größten Wert in der
+    Legende. Die Skala geht nach Rang und nicht nach Wert; sonst würden China und Indien
+    alles andere in einen einzigen Ton drücken.</p>
+<figure><img src="../assets/img/10-map-population.webp" alt="Bevölkerung" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Bevölkerung je Region. Die Legende nennt den kleinsten, den mittleren und den größten Wert.</figcaption></figure>
+</section>
+<section id="map-rel"><h2><i class="bi bi-arrow-left-right" aria-hidden="true"></i>Beziehungen und Verträge</h2>
+<p>Nehmen Sie <em>Beziehungen eines Landes</em> und wählen Sie ein Land: Jedes andere
+    wird danach eingefärbt, wie es zu diesem steht — von feindlich über neutral bis
+    verbündet, aus der Tabelle <code>RELATIONS</code>.</p>
+<figure><img src="../assets/img/11-map-relations.webp" alt="Beziehungen zu den Vereinigten Staaten" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Wie die Welt zu den Vereinigten Staaten steht. Das gewählte Land behält seine eigene Farbe.</figcaption></figure>
+<p><em>Vertragsmitglieder</em> macht dasselbe: Wählen Sie einen
+    Vertrag aus <code>TREATY</code>, und seine Mitglieder leuchten auf.</p>
+<figure><img src="../assets/img/12-map-treaty.webp" alt="Mitglieder der NATO" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Die Mitglieder eines Vertrags — hier der NATO — gegenüber allen anderen.</figcaption></figure>
+</section>
+<section id="map-mil"><h2><i class="bi bi-shield" aria-hidden="true"></i>Armeen, Raketen, Stärke</h2>
+<p>Das Menü <strong>Ebenen</strong> rechts schaltet zwei Punktmengen an: die Einheiten aus
+    <code>UNITS</code> und die Raketen aus <code>MISSILE</code>, jede dort gezeichnet, wo
+    das Spiel sie stehen sieht.</p>
+<figure><img src="../assets/img/13-map-layers-menu.webp" alt="Ebenenmenü" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Truppen und Raketen als getrennte Schalter, über dem, was die Farben gerade zeigen.</figcaption></figure>
+<p><em>Einheiten gesamt</em> zählt zusammen, was jedes Land wirklich besitzt,
+    und schattiert die Länder nach der Summe: So sieht man auf einen Blick, welche Länder in dieser
+    Datenbank die Schwergewichte sind.</p>
+<figure><img src="../assets/img/14-map-force.webp" alt="Einheiten gesamt" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Länder nach der Stärke ihrer Streitkräfte schattiert, darüber die Standorte von Einheiten und Raketen.</figcaption></figure>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>SuperPower 2 hat keine Tabelle mit Namen der Einheitentypen, also beschriftet der Editor einen Typ mit einem Entwurf, der ihn tatsächlich benutzt — eine echte Probe aus <code>DESIGN</code>, keine Vermutung.</p></div>
+</section>
+<section id="map-edit"><h2><i class="bi bi-cursor" aria-hidden="true"></i>Von der Karte aus bearbeiten</h2>
+<p>Die Karte ist kein Bild — sie ist ein zweiter Weg zu denselben Zeilen.</p>
+<ul>
+     <li><strong>Klicken Sie auf eine Region</strong>, und ihre Zeile aus <code>REGION</code>
+       öffnet sich im gewohnten Bearbeitungsfenster.</li>
+     <li><strong>Der Besitzerschalter</strong> in diesem Fenster gibt die Region auf der
+       Stelle an ein anderes Land.</li>
+     <li><strong>Umschalt + Ziehen</strong> zieht einen Rahmen über mehrere Regionen und
+       überträgt sie alle in einem Schritt an ein Land. Die Karte zeichnet sich sofort neu,
+       ein Fehler fällt also gleich auf — und das Änderungsprotokoll nimmt ihn zurück.</li>
+   </ul>
+</section>
+<section id="merge"><h2><i class="bi bi-diagram-2" aria-hidden="true"></i>Länder zusammenlegen</h2>
+<p>Das Zusammenlegen ist der schwere Brocken: Alles, was einem Land gehört — Regionen,
+    Städte, Einheiten, Parteien, Verträge — geht an ein anderes über, und das
+    Ausgangsland wird stillgelegt. Die Beziehungsmatrix bleibt unangetastet. So baut man einen Mod, in dem Jugoslawien nie zerfallen
+    ist, oder einen, auf dessen Karte zwölf Länder statt hundertvierundneunzig stehen.</p>
+<figure><img src="../assets/img/15-merge.webp" alt="Länder zusammenlegen" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Zielland und die Länder benennen, die aufgehen sollen; der Editor listet auf, was umziehen wird, bevor überhaupt etwas passiert.</figcaption></figure>
+<p>Nichts zieht um, ehe Sie bestätigen, und das ganze Zusammenlegen landet im
+    Änderungsprotokoll als ein einziger Schritt, den Sie zurücknehmen können.</p>
+</section>
+<section id="replace"><h2><i class="bi bi-arrow-repeat" aria-hidden="true"></i>Suchen und ersetzen</h2>
+<p>Eine Spalte auf einmal, mit Vorschau. Wählen Sie Tabelle und Spalte, sagen Sie, was
+    zutreffen soll — gleich, enthält, größer als, leer — und was stattdessen hineinkommt.
+    Die <strong>Vorschau</strong> zeigt genau, welche Zeilen sich ändern würden und wie
+    viele.</p>
+<figure><img src="../assets/img/16-replace.webp" alt="Suchen und ersetzen mit Vorschau" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Erst die Vorschau: die Zeilen, die sich ändern würden, vorher und nachher, mit Anzahl.</figcaption></figure>
+</section>
+<section id="check"><h2><i class="bi bi-clipboard-check" aria-hidden="true"></i>Die Datenbank prüfen</h2>
+<p>Die Prüfung sucht nur echte Fehler; geraten wird nichts:</p>
+<ul>
+     <li>Verweise, die auf Zeilen zeigen, die es nicht gibt;</li>
+     <li>Textzeiger, die in der angehängten Sprachdatei fehlen;</li>
+     <li>aktive Länder ganz ohne Regionen;</li>
+     <li>Hauptstädte, die in einem anderen Land liegen;</li>
+     <li>doppelte Schlüssel und Regionen ohne eine einzige Stadt.</li>
+   </ul>
+<figure><img src="../assets/img/17-check.webp" alt="Datenbankprüfung" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Die Funde nach Art gruppiert. Jeder Eintrag führt direkt zu der Zeile, die berichtigt werden muss.</figcaption></figure>
+<p>Sie lohnt sich nach einem Zusammenlegen oder einem großen Ersetzen — und noch einmal,
+    bevor Sie die Datei zurück ins Spiel nehmen.</p>
+</section>
+<section id="find"><h2><i class="bi bi-binoculars" aria-hidden="true"></i>Globale Suche</h2>
+<p>Ein Feld, alle Tabellen, dazu die Sprachdatei. Tippen Sie einen Namen, und Sie bekommen
+    die Zeilen, die ihn erwähnen, wo immer sie auch stehen.</p>
+<figure><img src="../assets/img/18-find.webp" alt="Globale Suche" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Suche nach „Poland“ über alle Tabellen und die Sprachdatei zugleich.</figcaption></figure>
+</section>
+<section id="log"><h2><i class="bi bi-clock-history" aria-hidden="true"></i>Änderungsprotokoll und Rückgängig</h2>
+<p>Jede Änderung dieser Sitzung — eine Zeile, ein Ersetzen, ein Zusammenlegen, eine
+    Übertragung auf der Karte — wird mit den Werten festgehalten, die sie verdrängt hat.
+    <strong>Rückgängig</strong> stellt die vorigen Werte wieder her.</p>
+<figure><img src="../assets/img/19-log.webp" alt="Änderungsprotokoll" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Was sich geändert hat, wo, wie viele Zellen, und neben jedem Schritt „Rückgängig“.</figcaption></figure>
+<p>Außerdem wird vor jeder einzelnen Änderung eine Kopie der Datei in den Ordner
+    <code>backups</code> des Projekts gelegt. Das Protokoll deckt die Sitzung ab; die Kopien
+    bleiben, solange das Projekt bleibt.</p>
+</section>
+<section id="gst"><h2><i class="bi bi-translate" aria-hidden="true"></i>Sprachdateien (.gst)</h2>
+<p>Eine <code>.gst</code> ist ein Index plus ein Block UTF-16-Text — dort wohnt in
+    Wahrheit jeder Name, den das Spiel Ihnen zeigt. Der Reiter Sprachen listet sie alle mit
+    Suche auf, und eine Zeile wird an Ort und Stelle bearbeitet.</p>
+<figure><img src="../assets/img/20-languages.webp" alt="Sprachdatei" width="1280" height="800" loading="lazy" decoding="async"><figcaption>StringTable.english.gst — die Zeilennummern hier sind die Zahlen, die die Datenbank in ihren *_STID-Spalten hält.</figcaption></figure>
+<p>Mehrere Sprachdateien können gleichzeitig offen sein; die, die Sie wählen, benutzen die
+    Tabellen der Datenbank, wenn sie die Namen unter die Zahlen schreiben. Ein Land für das
+    ganze Spiel umzubenennen ist hier eine einzige Zeile — keine Änderung in der Datenbank.</p>
+</section>
+<section id="ui"><h2><i class="bi bi-palette" aria-hidden="true"></i>Darstellung</h2>
+<p>Zehn Themen, Ihre eigene Akzent- und Textfarbe, zehn Schriften, eine Größe und ein
+    Schalter für die Dichte. Alles wird im Browser angewandt und bleibt dort, kostet also
+    nichts und begleitet Sie durch den ganzen Editor.</p>
+<figure><img src="../assets/img/21-appearance.webp" alt="Fenster „Darstellung“" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Thema, Akzent, Schrift und Dichte, mit lebendiger Vorschau unten.</figcaption></figure>
+</section>
+<section id="mobile"><h2><i class="bi bi-phone" aria-hidden="true"></i>Auf dem Handy</h2>
+<p>Das Layout klappt zusammen: Die Tabellenliste fährt von der Seite herein, die
+    Werkzeugleiste bricht um, und die Karte nimmt die volle Breite, mit Schieben per Finger
+    und Zoom mit zwei Fingern.</p>
+<figure><img src="../assets/img/23-mobile.webp" alt="Der Editor auf einem Handy" width="414" height="860" loading="lazy" decoding="async"><figcaption>Derselbe Editor bei 414 Pixeln Breite.</figcaption></figure>
+</section>
+<section id="save"><h2><i class="bi bi-download" aria-hidden="true"></i>Ihre Arbeit zurückholen</h2>
+<p><strong>Alles herunterladen (.zip)</strong> oben packt die Datenbank und jede offene
+    Sprachdatei in ein Archiv — mit genau den Namen, die das Spiel erwartet, bereit, wieder
+    nach <code>Extras\</code> oder in den Ordner Ihres Mods gelegt zu werden. Einzelne
+    Dateien können Sie für sich aus der linken Leiste herunterladen.</p>
+<p>Der Editor schreibt von sich aus nie in Ihr Spiel.</p>
+</section>
+<section id="safety"><h2><i class="bi bi-shield-check" aria-hidden="true"></i>Was er nicht tun wird</h2>
+<ul>
+     <li><strong>Indizierte Felder bleiben schreibgeschützt.</strong> Eine <code>ID</code> zu
+       ändern, ohne den Indexbaum neu zu bauen, würde die Datei unbemerkt beschädigen — und ein
+       unbemerkter Schaden in einer Datenbank, die das Spiel jede Runde liest, ist die schlimmste Sorte.</li>
+     <li><strong>Zeilen werden nicht hinzugefügt und nicht gelöscht</strong> — aus demselben
+       Grund.</li>
+     <li><strong>BLOB-Spalten</strong> erscheinen als <code>[BLOB]</code> und bleiben
+       unangetastet.</li>
+     <li><strong>Die Ordner des Servers selbst sind außer Reichweite.</strong> Dateien direkt
+       aus einem Spielordner zu öffnen ist ausgeschaltet, außer Sie lassen den Editor zu
+       Hause laufen und schalten es selbst ein.</li>
+   </ul>
+<p class="text-body-secondary mb-0">Alles andere steht Ihnen offen. Viel Freude damit.</p>
+</section>
+</main>
+</div>
+<footer><div class="wrap">
+  <p>MIT licence. Bundled third-party assets keep their own licences &mdash;
+     see <a href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor/blob/main/THIRD-PARTY-NOTICES.md">THIRD-PARTY-NOTICES</a>.</p>
+  <p>Unofficial fan-made tool. Not affiliated with, endorsed by or connected to GolemLabs,
+     DreamCatcher Interactive or any current rights holder of SuperPower&nbsp;2.
+     No game data is distributed here &mdash; you supply your own files.</p>
+  <p><svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="1" fill="#0057b7"/><rect y="1" width="3" height="1" fill="#ffd700"/></svg>
+     Made in Ukraine.</p>
+</div></footer><script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.toc a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function mark(){
+    var y=window.scrollY+120,i=0;
+    for(var k=0;k<secs.length;k++){ if(secs[k]&&secs[k].offsetTop<=y) i=k; }
+    links.forEach(function(a,k){ a.classList.toggle('on',k===i); });
+  }
+  window.addEventListener('scroll',mark,{passive:true});
+  mark();
+})();
+</script>
+</body>
+</html>

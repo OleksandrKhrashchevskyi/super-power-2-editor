@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SP2 DB Editor — guide (Português)</title>
+<meta name="description" content="Tudo o que o editor faz, por ordem e com capturas de ecrã.">
+<meta property="og:title" content="SP2 DB Editor — guide (Português)">
+<meta property="og:description" content="Tudo o que o editor faz, por ordem e com capturas de ecrã.">
+<meta property="og:type" content="website">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%234f8cff'/%3E%3Cg fill='%23fff'%3E%3Crect x='3' y='4' width='10' height='2' rx='.6'/%3E%3Crect x='3' y='7' width='10' height='2' rx='.6'/%3E%3Crect x='3' y='10' width='6' height='2' rx='.6'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/icons.css">
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="../index.html">SP2 DB Editor</a>
+  <nav>
+    <a href="../guide/index.html" class="on">Guide</a>
+    <a href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor">Source</a>
+    <a class="cta" href="http://editor.kraineuolek.com/super-power-2/">Open the editor</a>
+  </nav>
+</div></header>
+<div class="guide">
+<aside class="toc" aria-label="Contents"><ol><li><a href="#start">Primeiros passos</a></li><li><a href="#project">O seu projeto e a sua ligação</a></li><li><a href="#overview">O que mostra o separador Base de dados</a></li><li><a href="#table">Percorrer uma tabela</a></li><li><a href="#edit">Editar uma linha</a></li><li><a href="#struct">Estrutura da tabela</a></li><li><a href="#map">O mapa-mundo</a></li><li><a href="#map-who">Quem possui o quê</a></li><li><a href="#map-lang">Idioma e religião</a></li><li><a href="#map-num">Governo e números</a></li><li><a href="#map-rel">Relações e tratados</a></li><li><a href="#map-mil">Exércitos, mísseis, força</a></li><li><a href="#map-edit">Editar a partir do mapa</a></li><li><a href="#merge">Juntar países</a></li><li><a href="#replace">Procurar e substituir</a></li><li><a href="#check">Verificação da base</a></li><li><a href="#find">Pesquisa global</a></li><li><a href="#log">Registo e anular</a></li><li><a href="#gst">Ficheiros de idioma (.gst)</a></li><li><a href="#ui">Aspeto</a></li><li><a href="#mobile">No telemóvel</a></li><li><a href="#save">Levar o seu trabalho de volta</a></li><li><a href="#safety">O que não fará</a></li></ol></aside>
+<main class="doc"><h1>SP2 DB Editor</h1><p class="lead">Tudo o que o editor faz, por ordem e com capturas de ecrã.</p><div class="langbar"><a href="en.html" hreflang="en">English</a><a href="de.html" hreflang="de">Deutsch</a><a href="es.html" hreflang="es">Español</a><a href="fr.html" hreflang="fr">Français</a><a href="it.html" hreflang="it">Italiano</a><a href="nl.html" hreflang="nl">Nederlands</a><a href="pt.html" hreflang="pt" class="on">Português</a><a href="uk.html" hreflang="uk">Українська</a><a href="ru.html" hreflang="ru">Русский</a></div><section id="start"><h2><i class="bi bi-rocket-takeoff" aria-hidden="true"></i>Primeiros passos</h2>
+<p>O editor abre os ficheiros do próprio jogo. Não instala nada nem converte nada: lê
+    <code>DATABASE.GDB</code> — uma base Firebird 1.5 — e os ficheiros de texto
+    <code>StringTable.*.gst</code> byte a byte, em PHP puro.</p>
+<ol>
+     <li>Encontre os ficheiros do jogo. Uma instalação limpa guarda-os em
+       <code>SuperPower 2\Extras\</code>; um mod guarda a sua própria cópia em
+       <code>SuperPower 2\MODS\&lt;nome do mod&gt;\</code>.</li>
+     <li>Arraste <code>DATABASE.GDB</code> para a caixa de envio, ou clique nela e escolha
+       o ficheiro.</li>
+     <li>Passe ao separador <strong>Idiomas</strong> e envie também um
+       <code>StringTable.*.gst</code>. É opcional, mas sem ele os países e as cidades são
+       apenas números.</li>
+   </ol>
+<p>Um <code>.zip</code> com vários desses ficheiros de uma vez também serve: a base vai
+    para um separador e cada ficheiro de idioma para o outro.</p>
+<figure><img src="../assets/img/01-upload.webp" alt="Ecrã de envio" width="1280" height="729" loading="lazy" decoding="async"><figcaption>Largue o ficheiro ou clique para o escolher. A barra mostra megabytes e velocidade; a página abre-se sozinha quando o envio termina.</figcaption></figure>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>Os seus ficheiros são cópias. Os originais do jogo nunca são tocados — no fim é a cópia editada que transfere.</p></div>
+</section>
+<section id="project"><h2><i class="bi bi-folder2-open" aria-hidden="true"></i>O seu projeto e a sua ligação</h2>
+<p>Não há registo. Assim que abre a página recebe um código de projeto curto, e tudo o
+    que enviar vive numa pasta só sua. Duas pessoas podem enviar cada uma o seu
+    <code>DATABASE.GDB</code> no mesmo minuto sem mexer no trabalho da outra.</p>
+<p>O código fica num cookie, por isso normalmente nem pensa nele. Também está na ligação:
+    guarde essa ligação e o projeto abre noutro computador, no telemóvel ou depois de
+    limpar os cookies. Encontra-a em baixo no painel da esquerda e na página inicial, sob
+    <em>O seu projeto</em>.</p>
+<figure><img src="../assets/img/22-project.webp" alt="Janela do projeto" width="1280" height="800" loading="lazy" decoding="async"><figcaption>A ligação do projeto, o código, quanto espaço ocupa, e um botão que começa um projeto vazio.</figcaption></figure>
+<p>Um projeto é apagado sete dias depois da última visita. <strong>Fechar</strong> retira
+    um ficheiro do projeto de propósito — fica sempre uma cópia na pasta
+    <code>backups</code> do projeto.</p>
+</section>
+<section id="overview"><h2><i class="bi bi-speedometer2" aria-hidden="true"></i>O que mostra o separador Base de dados</h2>
+<p>Com uma base de dados aberta, chega a um resumo: quantas tabelas, linhas e colunas há, quais são
+    as tabelas grandes, e atalhos para tudo o que vale a pena fazer.</p>
+<figure><img src="../assets/img/02-overview.webp" alt="Resumo da base de dados" width="1280" height="800" loading="lazy" decoding="async"><figcaption>O SuperPower 2 vem com 28 tabelas e cerca de 62 800 linhas. O emblema verde à esquerda quer dizer que há um ficheiro de idioma anexado, por isso os números aparecem como nomes.</figcaption></figure>
+</section>
+<section id="table"><h2><i class="bi bi-table" aria-hidden="true"></i>Percorrer uma tabela</h2>
+<p>Escolha uma tabela à esquerda. Clique num cabeçalho de coluna para ordenar. O botão
+    <strong>Filtrar</strong> abre uma fila de caixas debaixo dos cabeçalhos: escreva numa
+    delas e só ficam as linhas que correspondem.</p>
+<figure><img src="../assets/img/03-table.webp" alt="Tabela COUNTRY" width="1280" height="800" loading="lazy" decoding="async"><figcaption>COUNTRY, 194 linhas e 86 colunas. Debaixo de NAME_STID o editor escreve o nome verdadeiro tirado do ficheiro de idioma — a base só guarda 2136.</figcaption></figure>
+<ul>
+     <li><span class="badge text-bg-secondary">IDX</span> marca uma coluna usada pelos
+       índices. Essas são só de leitura, e a secção seguinte explica porquê.</li>
+     <li><span class="badge text-bg-secondary">TXT</span> marca uma coluna que aponta para o
+       ficheiro de idioma. O nome por baixo do número vem dali.</li>
+     <li>As tabelas grandes são paginadas; o tamanho da página escolhe-se em baixo.</li>
+   </ul>
+</section>
+<section id="edit"><h2><i class="bi bi-pencil-square" aria-hidden="true"></i>Editar uma linha</h2>
+<p>O lápis no início de uma linha abre todos os seus campos numa janela. Há uma caixa de
+    procura, porque algumas tabelas passam das duzentas colunas. <strong>Guardar</strong>
+    escreve os valores diretamente no <code>.gdb</code>.</p>
+<figure><img src="../assets/img/04-edit-row.webp" alt="Editor de linha" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Cada campo mostra o seu tipo e, nas colunas de texto, a linha do ficheiro de idioma. NULL tem o seu próprio interruptor, porque vazio e «por preencher» não são a mesma coisa para o jogo.</figcaption></figure>
+<div class="note"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i><p>Os campos sobre os quais os índices são construídos — <code>ID</code> em quase todas as tabelas do SP2 — não podem ser alterados. Um índice é uma árvore de chaves à parte dentro do ficheiro: altere o valor sem reconstruir a árvore e o jogo passa a ler as linhas erradas. Acrescentar e apagar linhas está bloqueado pela mesma razão.</p></div>
+</section>
+<section id="struct"><h2><i class="bi bi-diagram-3" aria-hidden="true"></i>Estrutura da tabela</h2>
+<p><strong>Estrutura</strong> lista as colunas de uma tabela com os seus tipos verdadeiros
+    de Firebird, deslocamentos e domínios, e aponta as que parecem ligações a outras tabelas.
+    Útil quando anda a descobrir o que uma coluna quer mesmo dizer.</p>
+<figure><img src="../assets/img/05-structure.webp" alt="Estrutura de COUNTRY" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Os tipos tal como o próprio Firebird os guarda. A coluna Notas assinala as ligações prováveis, a pertença a índices e os ponteiros de texto.</figcaption></figure>
+<p>A mesma lista existe como ficheiro: <em>Esquema JSON</em>, no painel da esquerda,
+    entrega-lhe o esquema inteiro para os seus próprios scripts.</p>
+</section>
+<section id="map"><h2><i class="bi bi-globe-americas" aria-hidden="true"></i>O mapa-mundo</h2>
+<p>A base de dados não traz mapa nenhum. O SuperPower 2 guarda 2 604 regiões e 3 347 cidades, cada
+    cidade com latitude e longitude — por isso o editor desenha uma região como o terreno que
+    está mais perto das suas próprias cidades do que das de qualquer outro, e depois recorta o
+    resultado pelas costas e fronteiras reais.</p>
+<p>É por isso que as formas ficam perto mas não exatas, e por isso o mapa o diz com
+    franqueza na linha por baixo da imagem. O que acerta em cheio é o que aqui importa:
+    <em>que região pertence a quem</em>, tirado diretamente da tabela que está a editar.</p>
+</section>
+<section id="map-who"><h2><i class="bi bi-flag" aria-hidden="true"></i>Quem possui o quê</h2>
+<figure><img src="../assets/img/06-map-country.webp" alt="Mapa colorido por país" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Cada região pintada com a cor do seu dono. A legenda nomeia os maiores donos; os restantes são agrupados em «e mais 180».</figcaption></figure>
+<p>Passe o rato por uma região e a etiqueta nomeia a região, o seu dono e a sua capital.
+    Arraste para deslocar, use a roda para ampliar, e a caixa ao lado da lista de camadas
+    destaca um único país, para ver o seu território de relance — incluindo os pedaços que
+    ficam noutros continentes.</p>
+</section>
+<section id="map-lang"><h2><i class="bi bi-translate" aria-hidden="true"></i>Idioma e religião</h2>
+<p>A lista <strong>Colorir por</strong>, em cima à esquerda, muda o que as cores querem dizer. O idioma e a
+    religião vêm das tabelas <code>LANGUAGES</code> e <code>RELIGIONS</code>, que guardam uma
+    proporção por região para cada idioma e cada religião — o mapa pinta o de maior proporção.</p>
+<figure><img src="../assets/img/07-map-language.webp" alt="Idioma predominante" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Idioma predominante por região.</figcaption></figure>
+<figure><img src="../assets/img/08-map-religion.webp" alt="Religião predominante" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Religião predominante por região.</figcaption></figure>
+<p>Outras duas camadas mostram a <em>proporção</em> de um idioma ou religião à sua escolha
+    como gradiente, que é a forma mais rápida de encontrar as regiões de que um mod se
+    esqueceu.</p>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>Estas camadas mostram os dados do jogo, não o mundo real — e os dados do jogo têm as suas esquisitices. O idioma predominante do Brasil sai como inglês; o da Ucrânia, como russo. É o que está em <code>DATABASE.GDB</code>, e agora pode vê-lo e corrigi-lo.</p></div>
+</section>
+<section id="map-num"><h2><i class="bi bi-bar-chart" aria-hidden="true"></i>Governo e números</h2>
+<figure><img src="../assets/img/09-map-government.webp" alt="Tipo de governo" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Tipo de governo por país, de GVT_TYPE.</figcaption></figure>
+<p>As camadas numéricas — população, infraestruturas, nível de telecomunicações — usam um
+    único gradiente, com o valor mais pequeno, o do meio e o maior escritos na legenda. A
+    escala vai por classificação e não por valor; de outro modo a China e a Índia esmagariam tudo o
+    resto num só tom.</p>
+<figure><img src="../assets/img/10-map-population.webp" alt="População" width="1280" height="800" loading="lazy" decoding="async"><figcaption>População por região. A legenda dá o valor mais pequeno, o do meio e o maior.</figcaption></figure>
+</section>
+<section id="map-rel"><h2><i class="bi bi-arrow-left-right" aria-hidden="true"></i>Relações e tratados</h2>
+<p>Escolha <em>Relações de um país</em> e depois um país: todos os outros ficam pintados
+    conforme aquilo que sentem por ele, de hostil a aliado passando por neutro, segundo a
+    tabela <code>RELATIONS</code>.</p>
+<figure><img src="../assets/img/11-map-relations.webp" alt="Relações para com os Estados Unidos" width="1280" height="800" loading="lazy" decoding="async"><figcaption>O que o mundo sente para com os Estados Unidos. O país escolhido mantém a sua própria cor.</figcaption></figure>
+<p><em>Membros de um tratado</em> faz o mesmo: escolha um tratado de
+    <code>TREATY</code> e os seus membros acendem-se.</p>
+<figure><img src="../assets/img/12-map-treaty.webp" alt="Membros da NATO" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Os membros de um tratado — aqui a NATO — em face de todos os outros.</figcaption></figure>
+</section>
+<section id="map-mil"><h2><i class="bi bi-shield" aria-hidden="true"></i>Exércitos, mísseis, força</h2>
+<p>O menu <strong>Camadas</strong>, à direita, acende dois conjuntos de pontos: as unidades
+    de <code>UNITS</code> e os mísseis de <code>MISSILE</code>, cada um desenhado onde o jogo
+    diz que está.</p>
+<figure><img src="../assets/img/13-map-layers-menu.webp" alt="Menu das camadas" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Tropas e mísseis como interruptores separados, por cima do que as cores estiverem a mostrar.</figcaption></figure>
+<p><em>Total de unidades</em> soma o que cada país possui de facto e sombreia os
+    países pelo total, para se ver de relance quem são os pesos pesados desta base.</p>
+<figure><img src="../assets/img/14-map-force.webp" alt="Total de unidades" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Países sombreados pela força que possuem, com as posições das unidades e dos mísseis por cima.</figcaption></figure>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>O SuperPower 2 não tem tabela com nomes de tipos de unidade, por isso o editor rotula um tipo com um desenho que o usa de facto — uma amostra verdadeira tirada de <code>DESIGN</code>, não um palpite.</p></div>
+</section>
+<section id="map-edit"><h2><i class="bi bi-cursor" aria-hidden="true"></i>Editar a partir do mapa</h2>
+<p>O mapa não é uma imagem — é uma segunda porta para as mesmas linhas.</p>
+<ul>
+     <li><strong>Clique numa região</strong> e a sua linha de <code>REGION</code> abre-se na
+       janela de edição do costume.</li>
+     <li><strong>O seletor de dono</strong> dessa janela entrega a região a outro país na hora.</li>
+     <li><strong>Shift + arrastar</strong> traça uma caixa sobre várias regiões e transfere-as
+       todas para um país de uma só vez. O mapa redesenha-se logo, por isso um erro salta à
+       vista — e o registo de alterações anula-o.</li>
+   </ul>
+</section>
+<section id="merge"><h2><i class="bi bi-diagram-2" aria-hidden="true"></i>Juntar países</h2>
+<p>Juntar é a operação pesada: tudo o que pertence a um país — regiões, cidades, unidades,
+    mísseis, partidos, tratados — passa para outro, e o país de origem é desativado. É assim
+    que se constrói um mod onde a Jugoslávia nunca se desfez, ou onde o mapa tem doze países
+    em vez de cento e noventa e quatro.</p>
+<figure><img src="../assets/img/15-merge.webp" alt="Juntar países" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Indique o país recetor e os países a juntar; o editor lista o que vai mudar de mãos antes de acontecer seja o que for.</figcaption></figure>
+<p>Nada se mexe enquanto não confirmar, e a junção inteira fica no registo de alterações
+    como um único passo, que pode anular.</p>
+</section>
+<section id="replace"><h2><i class="bi bi-arrow-repeat" aria-hidden="true"></i>Procurar e substituir</h2>
+<p>Uma coluna de cada vez, com pré-visualização. Escolha uma tabela e uma coluna, diga o
+    que deve corresponder — igual, contém, maior que, vazio — e o que pôr no lugar. A
+    <strong>Pré-visualizar</strong> mostra exatamente que linhas mudariam, e quantas.</p>
+<figure><img src="../assets/img/16-replace.webp" alt="Procurar e substituir com pré-visualização" width="1280" height="800" loading="lazy" decoding="async"><figcaption>A pré-visualização primeiro: as linhas que mudariam, antes e depois, com a contagem.</figcaption></figure>
+</section>
+<section id="check"><h2><i class="bi bi-clipboard-check" aria-hidden="true"></i>Verificação da base</h2>
+<p>A verificação procura só estragos verdadeiros; nada é adivinhado:</p>
+<ul>
+     <li>ligações que apontam para linhas que não existem;</li>
+     <li>ponteiros de texto que faltam no ficheiro de idioma anexado;</li>
+     <li>países ativos sem uma única região;</li>
+     <li>capitais assentes noutro país;</li>
+     <li>chaves repetidas e regiões sem uma única cidade.</li>
+   </ul>
+<figure><img src="../assets/img/17-check.webp" alt="Verificação da base de dados" width="1280" height="800" loading="lazy" decoding="async"><figcaption>As ocorrências agrupadas por tipo. Cada linha é uma ligação direta para a linha que é preciso corrigir.</figcaption></figure>
+<p>Vale a pena passá-la depois de uma junção ou de uma substituição grande, e outra vez
+    antes de levar o ficheiro de volta para o jogo.</p>
+</section>
+<section id="find"><h2><i class="bi bi-binoculars" aria-hidden="true"></i>Pesquisa global</h2>
+<p>Uma caixa, todas as tabelas, e ainda o ficheiro de idioma. Escreva um nome e recebe as
+    linhas que o mencionam, morem onde morarem.</p>
+<figure><img src="../assets/img/18-find.webp" alt="Pesquisa global" width="1280" height="800" loading="lazy" decoding="async"><figcaption>À procura de «Poland» em todas as tabelas e no ficheiro de idioma ao mesmo tempo.</figcaption></figure>
+</section>
+<section id="log"><h2><i class="bi bi-clock-history" aria-hidden="true"></i>Registo e anular</h2>
+<p>Cada alteração desta sessão — uma linha, uma substituição, uma junção, uma transferência
+    no mapa — fica anotada com os valores que substituiu. <strong>Anular</strong> repõe os
+    valores anteriores.</p>
+<figure><img src="../assets/img/19-log.webp" alt="Registo de alterações" width="1280" height="800" loading="lazy" decoding="async"><figcaption>O que mudou, onde, quantas células, e anular ao lado de cada passo.</figcaption></figure>
+<p>Além disso, antes de cada edição é guardada uma cópia do ficheiro na pasta
+    <code>backups</code> do projeto. O registo cobre a sessão; as cópias duram o que durar o
+    projeto.</p>
+</section>
+<section id="gst"><h2><i class="bi bi-translate" aria-hidden="true"></i>Ficheiros de idioma (.gst)</h2>
+<p>Um <code>.gst</code> é um índice mais um bloco de texto UTF-16 — é ali que vive mesmo
+    cada nome que o jogo lhe mostra. O separador Idiomas lista-os todos com procura, e uma
+    linha edita-se ali mesmo.</p>
+<figure><img src="../assets/img/20-languages.webp" alt="Ficheiro de idioma" width="1280" height="800" loading="lazy" decoding="async"><figcaption>StringTable.english.gst — os números de linha daqui são os números que a base guarda nas suas colunas *_STID.</figcaption></figure>
+<p>Podem estar abertos vários ficheiros de idioma ao mesmo tempo; o que escolher é o que as
+    tabelas da base usam ao escrever os nomes por baixo dos números. Mudar o nome de um país
+    para todo o jogo é uma única linha aqui — não uma edição na base.</p>
+</section>
+<section id="ui"><h2><i class="bi bi-palette" aria-hidden="true"></i>Aspeto</h2>
+<p>Dez temas, a sua própria cor de destaque e de texto, dez tipos de letra, um tamanho e um
+    interruptor de densidade. Tudo se aplica no navegador e fica por lá, por isso não custa
+    nada e acompanha-o por todo o editor.</p>
+<figure><img src="../assets/img/21-appearance.webp" alt="Janela do aspeto" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Temas, destaque, tipo de letra e densidade, com pré-visualização em tempo real em baixo.</figcaption></figure>
+</section>
+<section id="mobile"><h2><i class="bi bi-phone" aria-hidden="true"></i>No telemóvel</h2>
+<p>A disposição dobra-se: a lista de tabelas entra a deslizar do lado, a barra de
+    ferramentas passa para várias linhas, e o mapa ocupa toda a largura, com deslocação ao
+    toque e ampliação com dois dedos.</p>
+<figure><img src="../assets/img/23-mobile.webp" alt="O editor num telemóvel" width="414" height="860" loading="lazy" decoding="async"><figcaption>O mesmo editor com 414 pixels de largura.</figcaption></figure>
+</section>
+<section id="save"><h2><i class="bi bi-download" aria-hidden="true"></i>Levar o seu trabalho de volta</h2>
+<p><strong>Transferir tudo (.zip)</strong>, em cima, mete a base e todos os ficheiros de
+    idioma que tiver abertos num só arquivo — com os nomes que o jogo espera, prontos a voltar
+    para <code>Extras\</code> ou para a pasta do seu mod. Os ficheiros soltos transferem-se
+    à parte, a partir do painel da esquerda.</p>
+<p>O editor nunca escreve no seu jogo por sua conta.</p>
+</section>
+<section id="safety"><h2><i class="bi bi-shield-check" aria-hidden="true"></i>O que não fará</h2>
+<ul>
+     <li><strong>Os campos indexados continuam só de leitura.</strong> Alterar um
+       <code>ID</code> sem reconstruir a árvore do índice partiria o ficheiro em silêncio — e
+       uma quebra silenciosa numa base que o jogo lê a cada turno é a pior de todas.</li>
+     <li><strong>Não se acrescentam nem se apagam linhas</strong> — pela mesma razão.</li>
+     <li><strong>As colunas BLOB</strong> aparecem como <code>[BLOB]</code> e ficam intocadas.</li>
+     <li><strong>As pastas do próprio servidor estão fora de alcance.</strong> Abrir ficheiros
+       diretamente de uma pasta do jogo está desligado, a não ser que corra o editor em casa e
+       seja o próprio a ligá-lo.</li>
+   </ul>
+<p class="text-body-secondary mb-0">Todo o resto é terreno livre. Divirta-se.</p>
+</section>
+</main>
+</div>
+<footer><div class="wrap">
+  <p>MIT licence. Bundled third-party assets keep their own licences &mdash;
+     see <a href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor/blob/main/THIRD-PARTY-NOTICES.md">THIRD-PARTY-NOTICES</a>.</p>
+  <p>Unofficial fan-made tool. Not affiliated with, endorsed by or connected to GolemLabs,
+     DreamCatcher Interactive or any current rights holder of SuperPower&nbsp;2.
+     No game data is distributed here &mdash; you supply your own files.</p>
+  <p><svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="1" fill="#0057b7"/><rect y="1" width="3" height="1" fill="#ffd700"/></svg>
+     Made in Ukraine.</p>
+</div></footer><script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.toc a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function mark(){
+    var y=window.scrollY+120,i=0;
+    for(var k=0;k<secs.length;k++){ if(secs[k]&&secs[k].offsetTop<=y) i=k; }
+    links.forEach(function(a,k){ a.classList.toggle('on',k===i); });
+  }
+  window.addEventListener('scroll',mark,{passive:true});
+  mark();
+})();
+</script>
+</body>
+</html>

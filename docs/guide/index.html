@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SP2 DB Editor — guide (English)</title>
+<meta name="description" content="Everything the editor can do, in order, with screenshots.">
+<meta property="og:title" content="SP2 DB Editor — guide (English)">
+<meta property="og:description" content="Everything the editor can do, in order, with screenshots.">
+<meta property="og:type" content="website">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%234f8cff'/%3E%3Cg fill='%23fff'%3E%3Crect x='3' y='4' width='10' height='2' rx='.6'/%3E%3Crect x='3' y='7' width='10' height='2' rx='.6'/%3E%3Crect x='3' y='10' width='6' height='2' rx='.6'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/icons.css">
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="../index.html">SP2 DB Editor</a>
+  <nav>
+    <a href="../guide/index.html" class="on">Guide</a>
+    <a href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor">Source</a>
+    <a class="cta" href="http://editor.kraineuolek.com/super-power-2/">Open the editor</a>
+  </nav>
+</div></header>
+<div class="guide">
+<aside class="toc" aria-label="Contents"><ol><li><a href="#start">Quick start</a></li><li><a href="#project">Your project and its link</a></li><li><a href="#overview">What the database tab shows</a></li><li><a href="#table">Browsing a table</a></li><li><a href="#edit">Editing a row</a></li><li><a href="#struct">Table structure</a></li><li><a href="#map">The world map</a></li><li><a href="#map-who">Who owns what</a></li><li><a href="#map-lang">Language and religion</a></li><li><a href="#map-num">Government and numbers</a></li><li><a href="#map-rel">Relations and treaties</a></li><li><a href="#map-mil">Armies, missiles, strength</a></li><li><a href="#map-edit">Editing from the map</a></li><li><a href="#merge">Merging countries</a></li><li><a href="#replace">Find and replace</a></li><li><a href="#check">Checking the database</a></li><li><a href="#find">Global search</a></li><li><a href="#log">Change log and undo</a></li><li><a href="#gst">Language files (.gst)</a></li><li><a href="#ui">Appearance</a></li><li><a href="#mobile">On a phone</a></li><li><a href="#save">Getting your work back</a></li><li><a href="#safety">What it will not do</a></li></ol></aside>
+<main class="doc"><h1>SP2 DB Editor</h1><p class="lead">Everything the editor can do, in order, with screenshots.</p><div class="langbar"><a href="en.html" hreflang="en" class="on">English</a><a href="de.html" hreflang="de">Deutsch</a><a href="es.html" hreflang="es">Español</a><a href="fr.html" hreflang="fr">Français</a><a href="it.html" hreflang="it">Italiano</a><a href="nl.html" hreflang="nl">Nederlands</a><a href="pt.html" hreflang="pt">Português</a><a href="uk.html" hreflang="uk">Українська</a><a href="ru.html" hreflang="ru">Русский</a></div><section id="start"><h2><i class="bi bi-rocket-takeoff" aria-hidden="true"></i>Quick start</h2>
+<p>The editor opens the game's own files. Nothing is installed and nothing is
+    converted: it reads <code>DATABASE.GDB</code> — a Firebird 1.5 database — and
+    the <code>StringTable.*.gst</code> text files byte by byte, in plain PHP.</p>
+<ol>
+     <li>Find the game's files. A clean install keeps them under
+       <code>SuperPower 2\Extras\</code>; a mod keeps its own copy under
+       <code>SuperPower 2\MODS\&lt;mod name&gt;\</code>.</li>
+     <li>Drag <code>DATABASE.GDB</code> onto the upload box, or click it and pick the file.</li>
+     <li>Switch to the <strong>Languages</strong> tab and upload a
+       <code>StringTable.*.gst</code> as well. This one is optional, but without it
+       countries and cities are only numbers.</li>
+   </ol>
+<p>A <code>.zip</code> holding several of those files at once works too — the
+    database goes to one tab and every language file to the other.</p>
+<figure><img src="../assets/img/01-upload.webp" alt="Upload screen" width="1280" height="729" loading="lazy" decoding="async"><figcaption>Drop the file or click to choose. The bar shows megabytes and speed; the page opens by itself when the upload finishes.</figcaption></figure>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>Your files are copies. The game's originals are never touched — you download the edited copy when you are done.</p></div>
+</section>
+<section id="project"><h2><i class="bi bi-folder2-open" aria-hidden="true"></i>Your project and its link</h2>
+<p>There is no registration. The moment you open the page you get a short project
+    code, and everything you upload lives in a folder of its own. Two people can
+    upload their own <code>DATABASE.GDB</code> in the same minute without touching
+    each other's work.</p>
+<p>The code sits in a cookie, so normally you never think about it. It is also in
+    the link — keep that link and the project opens on another computer, on a phone,
+    or after the cookies are cleared. You will find it at the bottom of the left
+    panel and on the front page under <em>Your project</em>.</p>
+<figure><img src="../assets/img/22-project.webp" alt="Project window" width="1280" height="800" loading="lazy" decoding="async"><figcaption>The project link, the code, how much space the project uses, and a button that starts an empty one.</figcaption></figure>
+<p>A project is deleted seven days after its last visit. <strong>Close</strong>
+    removes a file from the project on purpose — a copy stays in the project's
+    <code>backups</code> folder either way.</p>
+</section>
+<section id="overview"><h2><i class="bi bi-speedometer2" aria-hidden="true"></i>What the database tab shows</h2>
+<p>With a database open you land on a summary: how many tables, rows and columns
+    there are, which tables are the big ones, and shortcuts to everything worth doing.</p>
+<figure><img src="../assets/img/02-overview.webp" alt="Database overview" width="1280" height="800" loading="lazy" decoding="async"><figcaption>SuperPower 2 comes with 28 tables and about 62 800 rows. The green badge on the left means a language file is attached, so numbers are shown as names.</figcaption></figure>
+</section>
+<section id="table"><h2><i class="bi bi-table" aria-hidden="true"></i>Browsing a table</h2>
+<p>Pick a table on the left. Click a column header to sort. The
+    <strong>Filter</strong> button opens a row of boxes under the headers — type
+    into one and only the matching rows stay.</p>
+<figure><img src="../assets/img/03-table.webp" alt="COUNTRY table" width="1280" height="800" loading="lazy" decoding="async"><figcaption>COUNTRY, 194 rows and 86 columns. Under NAME_STID the editor prints the real name from the language file — the database itself only stores 2136.</figcaption></figure>
+<ul>
+     <li><span class="badge text-bg-secondary">IDX</span> marks a column that indexes
+       use. Those are read-only, and the next section explains why.</li>
+     <li><span class="badge text-bg-secondary">TXT</span> marks a column that points
+       into the language file. The name underneath the number comes from there.</li>
+     <li>Big tables are paged; the page size is yours to choose at the bottom.</li>
+   </ul>
+</section>
+<section id="edit"><h2><i class="bi bi-pencil-square" aria-hidden="true"></i>Editing a row</h2>
+<p>The pencil at the start of a row opens every field of that row in one window.
+    There is a search box, because some tables have more than two hundred columns.
+    <strong>Save</strong> writes the values straight into the <code>.gdb</code>.</p>
+<figure><img src="../assets/img/04-edit-row.webp" alt="Row editor" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Each field shows its type and, for text columns, the line from the language file. NULL has its own switch, because empty and "not set" are different things to the game.</figcaption></figure>
+<div class="note"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i><p>Fields that indexes are built on — <code>ID</code> in nearly every SP2 table — cannot be changed. An index is a separate tree of keys inside the file; change the value without rebuilding the tree and the game starts reading the wrong rows. Adding and deleting rows is blocked for the same reason.</p></div>
+</section>
+<section id="struct"><h2><i class="bi bi-diagram-3" aria-hidden="true"></i>Table structure</h2>
+<p><strong>Structure</strong> lists the columns of a table with their real Firebird
+    types, offsets and domains, and points out which ones look like links to other
+    tables. Useful when you are working out what a column actually means.</p>
+<figure><img src="../assets/img/05-structure.webp" alt="Structure of COUNTRY" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Types as Firebird itself stores them. The Notes column flags likely links, index membership and text pointers.</figcaption></figure>
+<p>The same list is available as a file: <em>Schema JSON</em> in the left panel
+    hands you the whole schema for your own scripts.</p>
+</section>
+<section id="map"><h2><i class="bi bi-globe-americas" aria-hidden="true"></i>The world map</h2>
+<p>The database has no map in it. SuperPower 2 stores 2 604 regions and 3 347
+    cities, each city with a latitude and a longitude — so the editor draws a region
+    as the ground that is nearer to its own cities than to anyone else's, then
+    trims the result against real coastlines and borders.</p>
+<p>That is why the shapes are close but not exact, and why the map is honest about
+    it in the line under the picture. What it gets exactly right is the part that
+    matters here: <em>which region belongs to whom</em>, straight out of the table
+    you are editing.</p>
+</section>
+<section id="map-who"><h2><i class="bi bi-flag" aria-hidden="true"></i>Who owns what</h2>
+<figure><img src="../assets/img/06-map-country.webp" alt="Map coloured by country" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Every region painted in the colour of its owner. The legend lists the largest owners; the rest fold into “and 180 more”.</figcaption></figure>
+<p>Hover a region and the tooltip names the region, its owner and its capital.
+    Drag to pan, wheel to zoom, and the box next to the layer list highlights a
+    single country so you can see its territory in one glance — including the bits
+    of it that sit on other continents.</p>
+</section>
+<section id="map-lang"><h2><i class="bi bi-translate" aria-hidden="true"></i>Language and religion</h2>
+<p>The <strong>Colour by</strong> list at the top left changes what the colours mean. Language and
+    religion come from the <code>LANGUAGES</code> and <code>RELIGIONS</code> tables,
+    which hold a share per region for every language and every faith — the map paints
+    the one with the biggest share.</p>
+<figure><img src="../assets/img/07-map-language.webp" alt="Dominant language" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Dominant language per region.</figcaption></figure>
+<figure><img src="../assets/img/08-map-religion.webp" alt="Dominant religion" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Dominant religion per region.</figcaption></figure>
+<p>Two more layers show the <em>share</em> of one chosen language or faith as a
+    gradient, which is the quickest way to find the regions a mod forgot about.</p>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>These layers show the game's data, not the real world — and the game's data has its oddities. Brazil's dominant language comes out as English, Ukraine's as Russian. That is what is in <code>DATABASE.GDB</code>, and now you can see it and fix it.</p></div>
+</section>
+<section id="map-num"><h2><i class="bi bi-bar-chart" aria-hidden="true"></i>Government and numbers</h2>
+<figure><img src="../assets/img/09-map-government.webp" alt="Government type" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Government type per country, from GVT_TYPE.</figcaption></figure>
+<p>Numeric layers — population, infrastructure, telecommunication level — use one
+    gradient with the smallest, middle and largest value written on the legend.
+    The scale is by rank rather than by value, otherwise China and India flatten
+    everything else into a single shade.</p>
+<figure><img src="../assets/img/10-map-population.webp" alt="Population" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Population by region. The legend gives the smallest, the middle and the largest value.</figcaption></figure>
+</section>
+<section id="map-rel"><h2><i class="bi bi-arrow-left-right" aria-hidden="true"></i>Relations and treaties</h2>
+<p>Pick <em>Relations of one country</em> and choose a country: every other country
+    is painted by how it feels about that one, hostile through neutral to allied,
+    out of the <code>RELATIONS</code> table.</p>
+<figure><img src="../assets/img/11-map-relations.webp" alt="Relations towards the United States" width="1280" height="800" loading="lazy" decoding="async"><figcaption>How the world feels about the United States. The chosen country keeps its own colour.</figcaption></figure>
+<p><em>Treaty members</em> does the same: pick a treaty from
+    <code>TREATY</code> and its members light up.</p>
+<figure><img src="../assets/img/12-map-treaty.webp" alt="NATO members" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Members of a treaty — here NATO — against everyone else.</figcaption></figure>
+</section>
+<section id="map-mil"><h2><i class="bi bi-shield" aria-hidden="true"></i>Armies, missiles, strength</h2>
+<p>The <strong>Layers</strong> menu on the right switches on two sets of points:
+    army units from <code>UNITS</code> and missiles from <code>MISSILE</code>, each
+    drawn where the game says it stands.</p>
+<figure><img src="../assets/img/13-map-layers-menu.webp" alt="Layers menu" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Troops and missiles as separate switches, on top of whatever the colours are showing.</figcaption></figure>
+<p><em>Total units</em> sums what each country actually owns and
+    shades the countries by the total, so you can see at a glance who the heavy
+    players in this database are.</p>
+<figure><img src="../assets/img/14-map-force.webp" alt="Total units" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Countries shaded by the strength of the forces they own, with unit and missile positions on top.</figcaption></figure>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>SuperPower 2 has no table of unit type names, so the editor labels a type with an actual design that uses it — a real sample out of <code>DESIGN</code>, not a guess.</p></div>
+</section>
+<section id="map-edit"><h2><i class="bi bi-cursor" aria-hidden="true"></i>Editing from the map</h2>
+<p>The map is not a picture — it is a second way into the same rows.</p>
+<ul>
+     <li><strong>Click a region</strong> and its row from <code>REGION</code> opens in
+       the usual editing window.</li>
+     <li><strong>The owner switch</strong> in that window hands the region to another
+       country on the spot.</li>
+     <li><strong>Shift + drag</strong> draws a box over several regions and transfers
+       all of them to one country in a single step. The map redraws immediately, so a
+       mistake is obvious at once — and the change log will undo it.</li>
+   </ul>
+</section>
+<section id="merge"><h2><i class="bi bi-diagram-2" aria-hidden="true"></i>Merging countries</h2>
+<p>Merging is the heavy one: everything belonging to one country — regions, cities,
+    units, missiles, parties, treaties — moves to another, and the source country is
+    deactivated. The relations matrix is left alone. It is how you build a mod where Yugoslavia never broke up, or where
+    there are twelve countries on the map instead of a hundred and ninety-four.</p>
+<figure><img src="../assets/img/15-merge.webp" alt="Merge countries" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Name the target country and the countries to merge in; the editor lists what is going to move before anything happens.</figcaption></figure>
+<p>Nothing moves until you confirm, and the whole merge lands in the change log as
+    one step you can undo.</p>
+</section>
+<section id="replace"><h2><i class="bi bi-arrow-repeat" aria-hidden="true"></i>Find and replace</h2>
+<p>One column at a time, with a preview. Choose a table and a column, say what to
+    match — equals, contains, greater than, empty — and what to put there instead.
+    <strong>Preview</strong> shows exactly which rows would change, and how many.</p>
+<figure><img src="../assets/img/16-replace.webp" alt="Find and replace with preview" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Preview first: the rows that would change, before and after, with a count.</figcaption></figure>
+</section>
+<section id="check"><h2><i class="bi bi-clipboard-check" aria-hidden="true"></i>Checking the database</h2>
+<p>The check looks for real breakage only — nothing is guessed:</p>
+<ul>
+     <li>links pointing at rows that do not exist;</li>
+     <li>text pointers missing from the attached language file;</li>
+     <li>active countries with no regions at all;</li>
+     <li>capitals sitting in another country;</li>
+     <li>duplicate keys, and regions without a single city.</li>
+   </ul>
+<figure><img src="../assets/img/17-check.webp" alt="Database check" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Findings grouped by kind. Every line is a link straight into the row that needs fixing.</figcaption></figure>
+<p>This is worth running after a merge or a large replace, and again before you take
+    the file back into the game.</p>
+</section>
+<section id="find"><h2><i class="bi bi-binoculars" aria-hidden="true"></i>Global search</h2>
+<p>One box, every table, plus the language file. Type a name and you get the rows
+    that mention it wherever they live.</p>
+<figure><img src="../assets/img/18-find.webp" alt="Global search" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Searching for "Poland" across all tables and the language file at once.</figcaption></figure>
+</section>
+<section id="log"><h2><i class="bi bi-clock-history" aria-hidden="true"></i>Change log and undo</h2>
+<p>Every change this session — a row, a replace, a merge, a transfer on the map —
+    is recorded with the values it replaced. <strong>Undo</strong> puts the previous
+    values back.</p>
+<figure><img src="../assets/img/19-log.webp" alt="Change log" width="1280" height="800" loading="lazy" decoding="async"><figcaption>What changed, where, how many cells, and undo next to each step.</figcaption></figure>
+<p>Besides that, a copy of the file is put in the project's <code>backups</code>
+    folder before every single edit. The log covers the session; the copies stay for
+    as long as the project does.</p>
+</section>
+<section id="gst"><h2><i class="bi bi-translate" aria-hidden="true"></i>Language files (.gst)</h2>
+<p>A <code>.gst</code> is an index plus a block of UTF-16 text — it is where every
+    name the game shows you actually lives. The Languages tab lists all of them with
+    search, and a line is edited in place.</p>
+<figure><img src="../assets/img/20-languages.webp" alt="Language file" width="1280" height="800" loading="lazy" decoding="async"><figcaption>StringTable.english.gst — the line numbers here are the numbers the database stores in its *_STID columns.</figcaption></figure>
+<p>Several language files can be open at once; the one you pick is the one the
+    database tables use when they print names under the numbers. Renaming a country
+    for the whole game is a single line here — not an edit in the database.</p>
+</section>
+<section id="ui"><h2><i class="bi bi-palette" aria-hidden="true"></i>Appearance</h2>
+<p>Ten themes, your own accent and text colour, ten fonts, a size and a density
+    switch. It is all applied in the browser and kept there, so it costs nothing and
+    follows you around the editor.</p>
+<figure><img src="../assets/img/21-appearance.webp" alt="Appearance window" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Themes, accent, font and density, with a live preview at the bottom.</figcaption></figure>
+</section>
+<section id="mobile"><h2><i class="bi bi-phone" aria-hidden="true"></i>On a phone</h2>
+<p>The layout folds: the table list slides in from the side, the toolbar wraps, and
+    the map takes the full width with touch pan and pinch zoom.</p>
+<figure><img src="../assets/img/23-mobile.webp" alt="The editor on a phone" width="414" height="860" loading="lazy" decoding="async"><figcaption>The same editor at 414 pixels wide.</figcaption></figure>
+</section>
+<section id="save"><h2><i class="bi bi-download" aria-hidden="true"></i>Getting your work back</h2>
+<p><strong>Download all (.zip)</strong> at the top packs the database and every
+    language file you have open into one archive — the same names the game expects,
+    ready to drop back into <code>Extras\</code> or into your mod's folder. Single
+    files can be downloaded on their own from the left panel.</p>
+<p>The editor never writes into your game by itself.</p>
+</section>
+<section id="safety"><h2><i class="bi bi-shield-check" aria-hidden="true"></i>What it will not do</h2>
+<ul>
+     <li><strong>Indexed fields stay read-only.</strong> Changing an <code>ID</code>
+       without rebuilding the index tree would break the file quietly, and a quiet
+       break in a database the game reads every turn is the worst kind.</li>
+     <li><strong>Rows are not added or deleted</strong> — same reason.</li>
+     <li><strong>BLOB columns</strong> are shown as <code>[BLOB]</code> and left alone.</li>
+     <li><strong>The server's own folders are out of reach.</strong> Opening files
+       straight from a game folder is switched off unless you run the editor at home
+       and turn it on yourself.</li>
+   </ul>
+<p class="text-body-secondary mb-0">Everything else is fair game. Have fun with it.</p>
+</section>
+</main>
+</div>
+<footer><div class="wrap">
+  <p>MIT licence. Bundled third-party assets keep their own licences &mdash;
+     see <a href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor/blob/main/THIRD-PARTY-NOTICES.md">THIRD-PARTY-NOTICES</a>.</p>
+  <p>Unofficial fan-made tool. Not affiliated with, endorsed by or connected to GolemLabs,
+     DreamCatcher Interactive or any current rights holder of SuperPower&nbsp;2.
+     No game data is distributed here &mdash; you supply your own files.</p>
+  <p><svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="1" fill="#0057b7"/><rect y="1" width="3" height="1" fill="#ffd700"/></svg>
+     Made in Ukraine.</p>
+</div></footer><script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.toc a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function mark(){
+    var y=window.scrollY+120,i=0;
+    for(var k=0;k<secs.length;k++){ if(secs[k]&&secs[k].offsetTop<=y) i=k; }
+    links.forEach(function(a,k){ a.classList.toggle('on',k===i); });
+  }
+  window.addEventListener('scroll',mark,{passive:true});
+  mark();
+})();
+</script>
+</body>
+</html>

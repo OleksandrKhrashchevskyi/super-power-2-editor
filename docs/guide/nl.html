@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SP2 DB Editor — guide (Nederlands)</title>
+<meta name="description" content="Alles wat de editor kan, op volgorde en met schermafbeeldingen.">
+<meta property="og:title" content="SP2 DB Editor — guide (Nederlands)">
+<meta property="og:description" content="Alles wat de editor kan, op volgorde en met schermafbeeldingen.">
+<meta property="og:type" content="website">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%234f8cff'/%3E%3Cg fill='%23fff'%3E%3Crect x='3' y='4' width='10' height='2' rx='.6'/%3E%3Crect x='3' y='7' width='10' height='2' rx='.6'/%3E%3Crect x='3' y='10' width='6' height='2' rx='.6'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/icons.css">
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="../index.html">SP2 DB Editor</a>
+  <nav>
+    <a href="../guide/index.html" class="on">Guide</a>
+    <a href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor">Source</a>
+    <a class="cta" href="http://editor.kraineuolek.com/super-power-2/">Open the editor</a>
+  </nav>
+</div></header>
+<div class="guide">
+<aside class="toc" aria-label="Contents"><ol><li><a href="#start">Om te beginnen</a></li><li><a href="#project">Jouw project en zijn koppeling</a></li><li><a href="#overview">Wat het databasetabblad toont</a></li><li><a href="#table">Door een tabel bladeren</a></li><li><a href="#edit">Een rij bewerken</a></li><li><a href="#struct">Structuur van de tabel</a></li><li><a href="#map">De wereldkaart</a></li><li><a href="#map-who">Wie wat bezit</a></li><li><a href="#map-lang">Taal en religie</a></li><li><a href="#map-num">Bestuur en getallen</a></li><li><a href="#map-rel">Betrekkingen en verdragen</a></li><li><a href="#map-mil">Legers, raketten, sterkte</a></li><li><a href="#map-edit">Bewerken vanaf de kaart</a></li><li><a href="#merge">Landen samenvoegen</a></li><li><a href="#replace">Zoeken en vervangen</a></li><li><a href="#check">Databasecontrole</a></li><li><a href="#find">Globaal zoeken</a></li><li><a href="#log">Logboek en ongedaan maken</a></li><li><a href="#gst">Taalbestanden (.gst)</a></li><li><a href="#ui">Weergave</a></li><li><a href="#mobile">Op de telefoon</a></li><li><a href="#save">Je werk terughalen</a></li><li><a href="#safety">Wat hij niet zal doen</a></li></ol></aside>
+<main class="doc"><h1>SP2 DB Editor</h1><p class="lead">Alles wat de editor kan, op volgorde en met schermafbeeldingen.</p><div class="langbar"><a href="en.html" hreflang="en">English</a><a href="de.html" hreflang="de">Deutsch</a><a href="es.html" hreflang="es">Español</a><a href="fr.html" hreflang="fr">Français</a><a href="it.html" hreflang="it">Italiano</a><a href="nl.html" hreflang="nl" class="on">Nederlands</a><a href="pt.html" hreflang="pt">Português</a><a href="uk.html" hreflang="uk">Українська</a><a href="ru.html" hreflang="ru">Русский</a></div><section id="start"><h2><i class="bi bi-rocket-takeoff" aria-hidden="true"></i>Om te beginnen</h2>
+<p>De editor opent de bestanden van het spel zelf. Er wordt niets geïnstalleerd en niets
+    omgezet: hij leest <code>DATABASE.GDB</code> — een Firebird-1.5-database — en de
+    tekstbestanden <code>StringTable.*.gst</code> byte voor byte, in kale PHP.</p>
+<ol>
+     <li>Zoek de bestanden van het spel. Een schone installatie bewaart ze in
+       <code>SuperPower 2\Extras\</code>; een mod bewaart zijn eigen kopie in
+       <code>SuperPower 2\MODS\&lt;naam van de mod&gt;\</code>.</li>
+     <li>Sleep <code>DATABASE.GDB</code> op het uploadvak, of klik erop en kies het bestand.</li>
+     <li>Ga naar het tabblad <strong>Talen</strong> en upload ook een
+       <code>StringTable.*.gst</code>. Dat is niet verplicht, maar zonder dat bestand zijn
+       landen en steden alleen maar getallen.</li>
+   </ol>
+<p>Een <code>.zip</code> met meerdere van die bestanden tegelijk kan ook: de database gaat
+    naar het ene tabblad en elk taalbestand naar het andere.</p>
+<figure><img src="../assets/img/01-upload.webp" alt="Uploadscherm" width="1280" height="729" loading="lazy" decoding="async"><figcaption>Sleep het bestand hierheen of klik om het te kiezen. De balk toont megabytes en snelheid; de pagina opent vanzelf zodra het uploaden klaar is.</figcaption></figure>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>Jouw bestanden zijn kopieën. De originelen van het spel worden nooit aangeraakt — aan het eind download je de bewerkte kopie.</p></div>
+</section>
+<section id="project"><h2><i class="bi bi-folder2-open" aria-hidden="true"></i>Jouw project en zijn koppeling</h2>
+<p>Er is geen registratie. Zodra je de pagina opent krijg je een korte projectcode, en
+    alles wat je uploadt woont in een eigen map. Twee mensen kunnen in dezelfde minuut hun
+    eigen <code>DATABASE.GDB</code> uploaden zonder aan elkaars werk te komen.</p>
+<p>De code zit in een cookie, dus normaal denk je er nooit aan. Hij staat ook in de
+    koppeling: bewaar die koppeling en het project opent op een andere computer, op een
+    telefoon, of nadat de cookies gewist zijn. Je vindt hem onderaan in het linkerpaneel en
+    op de voorpagina, onder <em>Jouw project</em>.</p>
+<figure><img src="../assets/img/22-project.webp" alt="Projectvenster" width="1280" height="800" loading="lazy" decoding="async"><figcaption>De koppeling naar het project, de code, hoeveel ruimte het inneemt, en een knop die een leeg project begint.</figcaption></figure>
+<p>Een project wordt zeven dagen na het laatste bezoek verwijderd. <strong>Sluiten</strong>
+    haalt een bestand met opzet uit het project — er blijft hoe dan ook een kopie in de map
+    <code>backups</code> van het project.</p>
+</section>
+<section id="overview"><h2><i class="bi bi-speedometer2" aria-hidden="true"></i>Wat het databasetabblad toont</h2>
+<p>Met een geopende database kom je uit op een overzicht: hoeveel tabellen, rijen en kolommen
+    er zijn, welke tabellen de grote zijn, en snelkoppelingen naar alles wat de moeite waard
+    is.</p>
+<figure><img src="../assets/img/02-overview.webp" alt="Overzicht van de database" width="1280" height="800" loading="lazy" decoding="async"><figcaption>SuperPower 2 komt met 28 tabellen en ongeveer 62 800 rijen. Het groene label links betekent dat er een taalbestand bij zit, dus de getallen verschijnen als namen.</figcaption></figure>
+</section>
+<section id="table"><h2><i class="bi bi-table" aria-hidden="true"></i>Door een tabel bladeren</h2>
+<p>Kies links een tabel. Klik op een kolomkop om te sorteren. De knop
+    <strong>Filteren</strong> opent een rij vakjes onder de koppen: typ in een ervan en alleen
+    de passende rijen blijven staan.</p>
+<figure><img src="../assets/img/03-table.webp" alt="Tabel COUNTRY" width="1280" height="800" loading="lazy" decoding="async"><figcaption>COUNTRY, 194 rijen en 86 kolommen. Onder NAME_STID schrijft de editor de echte naam uit het taalbestand — de database zelf bewaart alleen 2136.</figcaption></figure>
+<ul>
+     <li><span class="badge text-bg-secondary">IDX</span> markeert een kolom die indexen
+       gebruiken. Die zijn alleen-lezen, en het volgende stuk legt uit waarom.</li>
+     <li><span class="badge text-bg-secondary">TXT</span> markeert een kolom die naar het
+       taalbestand wijst. De naam onder het getal komt daarvandaan.</li>
+     <li>Grote tabellen worden over pagina’s verdeeld; de paginagrootte kies je zelf, onderaan.</li>
+   </ul>
+</section>
+<section id="edit"><h2><i class="bi bi-pencil-square" aria-hidden="true"></i>Een rij bewerken</h2>
+<p>Het potlood aan het begin van een rij opent al haar velden in één venster. Er is een
+    zoekvakje, want sommige tabellen hebben meer dan tweehonderd kolommen.
+    <strong>Opslaan</strong> schrijft de waarden rechtstreeks in de <code>.gdb</code>.</p>
+<figure><img src="../assets/img/04-edit-row.webp" alt="Rij-editor" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Elk veld toont zijn type en, bij tekstkolommen, de regel uit het taalbestand. NULL heeft een eigen schakelaar, want leeg en «niet ingevuld» zijn voor het spel twee verschillende dingen.</figcaption></figure>
+<div class="note"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i><p>Velden waarop indexen rusten — <code>ID</code> in bijna elke SP2-tabel — kunnen niet gewijzigd worden. Een index is een aparte sleutelboom binnen het bestand: verander je de waarde zonder de boom opnieuw te bouwen, dan gaat het spel de verkeerde rijen lezen. Rijen toevoegen en verwijderen is om dezelfde reden geblokkeerd.</p></div>
+</section>
+<section id="struct"><h2><i class="bi bi-diagram-3" aria-hidden="true"></i>Structuur van de tabel</h2>
+<p><strong>Structuur</strong> somt de kolommen van een tabel op met hun echte
+    Firebird-types, offsets en domeinen, en wijst aan welke op koppelingen naar andere
+    tabellen lijken. Handig wanneer je uitzoekt wat een kolom eigenlijk betekent.</p>
+<figure><img src="../assets/img/05-structure.webp" alt="Structuur van COUNTRY" width="1280" height="800" loading="lazy" decoding="async"><figcaption>De types zoals Firebird ze zelf bewaart. De kolom Opmerkingen markeert waarschijnlijke koppelingen, lidmaatschap van indexen en tekstverwijzingen.</figcaption></figure>
+<p>Dezelfde lijst bestaat als bestand: <em>Schema-JSON</em> in het linkerpaneel geeft je
+    het hele schema voor je eigen scripts.</p>
+</section>
+<section id="map"><h2><i class="bi bi-globe-americas" aria-hidden="true"></i>De wereldkaart</h2>
+<p>In de database zit geen kaart. SuperPower 2 bewaart 2 604 regio’s en 3 347 steden, elke
+    stad met een breedte- en een lengtegraad — de editor tekent een regio dus als de grond die
+    dichter bij haar eigen steden ligt dan bij die van wie dan ook, en snijdt het resultaat
+    daarna bij op echte kustlijnen en grenzen.</p>
+<p>Daarom komen de vormen in de buurt maar zijn ze niet exact, en daarom zegt de kaart dat
+    ook eerlijk in de regel onder het beeld. Wat ze helemaal goed heeft, is waar het hier om
+    gaat: <em>welke regio’s van wie zijn</em>, rechtstreeks uit de tabel die je aan het bewerken
+    bent.</p>
+</section>
+<section id="map-who"><h2><i class="bi bi-flag" aria-hidden="true"></i>Wie wat bezit</h2>
+<figure><img src="../assets/img/06-map-country.webp" alt="Kaart gekleurd per land" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Elke regio gekleurd in de kleur van haar eigenaar. De legenda noemt de grootste eigenaren; de rest vouwt zich samen tot «en nog 180».</figcaption></figure>
+<p>Ga over een regio met de muis en de tekstballon noemt de regio, haar eigenaar en haar
+    hoofdstad. Slepen verschuift, het wiel zoomt, en het vakje naast de lagenlijst licht één
+    land uit: zo zie je zijn gebied in één oogopslag, inclusief de stukken die op andere
+    werelddelen liggen.</p>
+</section>
+<section id="map-lang"><h2><i class="bi bi-translate" aria-hidden="true"></i>Taal en religie</h2>
+<p>De lijst <strong>Kleuren op</strong> linksboven verandert wat de kleuren betekenen. Taal en religie komen uit
+    de tabellen <code>LANGUAGES</code> en <code>RELIGIONS</code>, die per regio een aandeel
+    bewaren voor elke taal en elk geloof — de kaart kleurt dat met het grootste aandeel.</p>
+<figure><img src="../assets/img/07-map-language.webp" alt="Dominante taal" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Dominante taal per regio.</figcaption></figure>
+<figure><img src="../assets/img/08-map-religion.webp" alt="Dominante religie" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Dominante religie per regio.</figcaption></figure>
+<p>Twee andere lagen tonen het <em>aandeel</em> van één gekozen taal of geloof als verloop —
+    de snelste manier om de regio’s te vinden die een mod vergeten is.</p>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>Deze lagen tonen de gegevens van het spel, niet de echte wereld — en de gegevens van het spel hebben hun eigenaardigheden. Als overheersende taal van Brazilië komt Engels eruit, voor Oekraïne Russisch. Dat staat nu eenmaal in <code>DATABASE.GDB</code>, en nu kun je het zien en rechtzetten.</p></div>
+</section>
+<section id="map-num"><h2><i class="bi bi-bar-chart" aria-hidden="true"></i>Bestuur en getallen</h2>
+<figure><img src="../assets/img/09-map-government.webp" alt="Regeringsvorm" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Regeringsvorm per land, uit GVT_TYPE.</figcaption></figure>
+<p>Getalslagen — bevolking, infrastructuur, niveau van de telecommunicatie — gebruiken één
+    verloop, met de kleinste, de middelste en de grootste waarde in de legenda. De schaal gaat
+    op rangorde en niet op waarde; anders drukken China en India al het andere in één tint.</p>
+<figure><img src="../assets/img/10-map-population.webp" alt="Bevolking" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Bevolking per regio. De legenda geeft de kleinste, de middelste en de grootste waarde.</figcaption></figure>
+</section>
+<section id="map-rel"><h2><i class="bi bi-arrow-left-right" aria-hidden="true"></i>Betrekkingen en verdragen</h2>
+<p>Kies <em>Betrekkingen van één land</em> en daarna een land: alle andere worden gekleurd
+    naar hoe ze tegenover dat land staan, van vijandig via neutraal tot bondgenoot, volgens de
+    tabel <code>RELATIONS</code>.</p>
+<figure><img src="../assets/img/11-map-relations.webp" alt="Betrekkingen tegenover de Verenigde Staten" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Hoe de wereld tegenover de Verenigde Staten staat. Het gekozen land houdt zijn eigen kleur.</figcaption></figure>
+<p><em>Verdragsleden</em> doet hetzelfde: kies een verdrag uit
+    <code>TREATY</code> en zijn leden lichten op.</p>
+<figure><img src="../assets/img/12-map-treaty.webp" alt="Leden van de NAVO" width="1280" height="800" loading="lazy" decoding="async"><figcaption>De leden van een verdrag — hier de NAVO — tegenover alle anderen.</figcaption></figure>
+</section>
+<section id="map-mil"><h2><i class="bi bi-shield" aria-hidden="true"></i>Legers, raketten, sterkte</h2>
+<p>Het menu <strong>Lagen</strong> rechts zet twee verzamelingen punten aan: de eenheden uit
+    <code>UNITS</code> en de raketten uit <code>MISSILE</code>, elk getekend waar het spel zegt
+    dat ze staan.</p>
+<figure><img src="../assets/img/13-map-layers-menu.webp" alt="Lagenmenu" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Troepen en raketten als aparte schakelaars, boven op wat de kleuren laten zien.</figcaption></figure>
+<p><em>Totaal aantal eenheden</em> telt op wat elk land werkelijk bezit en arceert de
+    landen naar het totaal: zo zie je in één oogopslag wie in deze database de zwaargewichten
+    zijn.</p>
+<figure><img src="../assets/img/14-map-force.webp" alt="Totaal aantal eenheden" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Landen gearceerd naar de sterkte van hun strijdkrachten, met daarboven de posities van eenheden en raketten.</figcaption></figure>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>SuperPower 2 heeft geen tabel met namen van eenheidstypes, dus geeft de editor een type het etiket van een ontwerp dat het echt gebruikt — een echt voorbeeld uit <code>DESIGN</code>, geen gok.</p></div>
+</section>
+<section id="map-edit"><h2><i class="bi bi-cursor" aria-hidden="true"></i>Bewerken vanaf de kaart</h2>
+<p>De kaart is geen plaatje — ze is een tweede ingang naar dezelfde rijen.</p>
+<ul>
+     <li><strong>Klik op een regio</strong> en haar rij uit <code>REGION</code> gaat open in
+       het gewone bewerkingsvenster.</li>
+     <li><strong>De eigenaarskeuze</strong> in dat venster geeft de regio ter plekke aan een
+       ander land.</li>
+     <li><strong>Shift + slepen</strong> trekt een kader over meerdere regio’s en draagt ze
+       allemaal in één keer over aan één land. De kaart tekent zich meteen opnieuw, dus een
+       vergissing valt direct op — en het wijzigingslogboek maakt haar ongedaan.</li>
+   </ul>
+</section>
+<section id="merge"><h2><i class="bi bi-diagram-2" aria-hidden="true"></i>Landen samenvoegen</h2>
+<p>Samenvoegen is de zwaarste bewerking: alles wat van één land is — regio’s, steden, eenheden, raketten,
+    partijen, verdragen — gaat over naar een ander, en het bronland wordt uitgeschakeld. Zo
+    bouw je een mod waarin Joegoslavië nooit uiteenviel, of waarin er twaalf landen op de kaart
+    staan in plaats van honderdvierennegentig.</p>
+<figure><img src="../assets/img/15-merge.webp" alt="Landen samenvoegen" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Noem het ontvangende land en de landen die erin opgaan; de editor somt op wat er gaat verhuizen voordat er ook maar iets gebeurt.</figcaption></figure>
+<p>Er verhuist niets totdat je bevestigt, en de hele samenvoeging belandt in het
+    wijzigingslogboek als één stap, die je ongedaan kunt maken.</p>
+</section>
+<section id="replace"><h2><i class="bi bi-arrow-repeat" aria-hidden="true"></i>Zoeken en vervangen</h2>
+<p>Eén kolom tegelijk, met voorbeeld. Kies een tabel en een kolom, zeg wat moet overeenkomen
+    — gelijk aan, bevat, groter dan, leeg — en wat er in de plaats komt. Het
+    <strong>voorbeeld</strong> laat precies zien welke rijen zouden veranderen, en hoeveel.</p>
+<figure><img src="../assets/img/16-replace.webp" alt="Zoeken en vervangen met voorbeeld" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Eerst het voorbeeld: de rijen die zouden veranderen, voor en na, met het aantal.</figcaption></figure>
+</section>
+<section id="check"><h2><i class="bi bi-clipboard-check" aria-hidden="true"></i>Databasecontrole</h2>
+<p>De controle zoekt alleen echte breuken; er wordt niets geraden:</p>
+<ul>
+     <li>koppelingen die naar rijen wijzen die niet bestaan;</li>
+     <li>tekstverwijzingen die in het bijgevoegde taalbestand ontbreken;</li>
+     <li>actieve landen zonder ook maar één regio;</li>
+     <li>hoofdsteden die in een ander land liggen;</li>
+     <li>dubbele sleutels, en regio’s zonder één enkele stad.</li>
+   </ul>
+<figure><img src="../assets/img/17-check.webp" alt="Databasecontrole" width="1280" height="800" loading="lazy" decoding="async"><figcaption>De bevindingen gegroepeerd naar soort. Elke regel is een koppeling recht naar de rij die gerepareerd moet worden.</figcaption></figure>
+<p>Het loont de moeite na een samenvoeging of een grote vervanging, en nog een keer voordat je het
+    bestand terugzet in het spel.</p>
+</section>
+<section id="find"><h2><i class="bi bi-binoculars" aria-hidden="true"></i>Globaal zoeken</h2>
+<p>Eén vakje, alle tabellen, en het taalbestand erbij. Typ een naam en je krijgt de rijen die
+    hem noemen, waar ze ook wonen.</p>
+<figure><img src="../assets/img/18-find.webp" alt="Globaal zoeken" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Zoeken naar «Poland» in alle tabellen en het taalbestand tegelijk.</figcaption></figure>
+</section>
+<section id="log"><h2><i class="bi bi-clock-history" aria-hidden="true"></i>Logboek en ongedaan maken</h2>
+<p>Elke wijziging van deze sessie — een rij, een vervanging, een samenvoeging, een overdracht
+    op de kaart — wordt genoteerd met de waarden die ze verving. <strong>Ongedaan maken</strong>
+    zet de vorige waarden terug.</p>
+<figure><img src="../assets/img/19-log.webp" alt="Wijzigingslogboek" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Wat er veranderde, waar, hoeveel cellen, en naast elke stap het ongedaan maken.</figcaption></figure>
+<p>Daarbovenop wordt vóór elke afzonderlijke bewerking een kopie van het bestand in de map
+    <code>backups</code> van het project gelegd. Het logboek dekt de sessie; de kopieën blijven
+    zolang het project blijft.</p>
+</section>
+<section id="gst"><h2><i class="bi bi-translate" aria-hidden="true"></i>Taalbestanden (.gst)</h2>
+<p>Een <code>.gst</code> is een index plus een blok UTF-16-tekst — daar woont werkelijk elke
+    naam die het spel je laat zien. Het tabblad Talen somt ze allemaal op met zoekfunctie, en
+    een regel bewerk je ter plekke.</p>
+<figure><img src="../assets/img/20-languages.webp" alt="Taalbestand" width="1280" height="800" loading="lazy" decoding="async"><figcaption>StringTable.english.gst — de regelnummers hier zijn de getallen die de database in haar *_STID-kolommen bewaart.</figcaption></figure>
+<p>Er kunnen meerdere taalbestanden tegelijk open staan; degene die je kiest gebruiken de
+    tabellen van de database wanneer ze de namen onder de getallen schrijven. Een land voor het
+    hele spel hernoemen is hier één regel — geen bewerking in de database.</p>
+</section>
+<section id="ui"><h2><i class="bi bi-palette" aria-hidden="true"></i>Weergave</h2>
+<p>Tien thema’s, je eigen accent- en tekstkleur, tien lettertypes, een grootte en een
+    schakelaar voor de dichtheid. Alles wordt in de browser toegepast en blijft daar, dus het
+    kost niets en volgt je door de hele editor.</p>
+<figure><img src="../assets/img/21-appearance.webp" alt="Het venster Weergave" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Thema’s, accent, lettertype en dichtheid, met een levend voorbeeld onderaan.</figcaption></figure>
+</section>
+<section id="mobile"><h2><i class="bi bi-phone" aria-hidden="true"></i>Op de telefoon</h2>
+<p>De indeling vouwt zich op: de tabellenlijst schuift van opzij binnen, de werkbalk loopt door
+    op meerdere regels, en de kaart neemt de volle breedte, met schuiven met de vinger en zoomen met twee
+    vingers.</p>
+<figure><img src="../assets/img/23-mobile.webp" alt="De editor op een telefoon" width="414" height="860" loading="lazy" decoding="async"><figcaption>Dezelfde editor bij 414 pixels breed.</figcaption></figure>
+</section>
+<section id="save"><h2><i class="bi bi-download" aria-hidden="true"></i>Je werk terughalen</h2>
+<p><strong>Alles downloaden (.zip)</strong> bovenaan pakt de database en elk taalbestand dat
+    je open hebt in één archief — met precies de namen die het spel verwacht, klaar om terug te
+    zetten in <code>Extras\</code> of in de map van je mod. Losse bestanden download je apart
+    vanuit het linkerpaneel.</p>
+<p>De editor schrijft nooit uit zichzelf in je spel.</p>
+</section>
+<section id="safety"><h2><i class="bi bi-shield-check" aria-hidden="true"></i>Wat hij niet zal doen</h2>
+<ul>
+     <li><strong>Geïndexeerde velden blijven alleen-lezen.</strong> Een <code>ID</code>
+       veranderen zonder de indexboom opnieuw te bouwen zou het bestand stilletjes breken — en
+       een stille breuk in een database die het spel elke beurt leest is de ergste soort.</li>
+     <li><strong>Rijen worden niet toegevoegd of verwijderd</strong> — om dezelfde reden.</li>
+     <li><strong>BLOB-kolommen</strong> verschijnen als <code>[BLOB]</code> en blijven met rust.</li>
+     <li><strong>De mappen van de server zelf zijn buiten bereik.</strong> Bestanden rechtstreeks
+       uit een spelmap openen staat uit, tenzij je de editor thuis draait en het zelf aanzet.</li>
+   </ul>
+<p class="text-body-secondary mb-0">Al het andere mag. Veel plezier ermee.</p>
+</section>
+</main>
+</div>
+<footer><div class="wrap">
+  <p>MIT licence. Bundled third-party assets keep their own licences &mdash;
+     see <a href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor/blob/main/THIRD-PARTY-NOTICES.md">THIRD-PARTY-NOTICES</a>.</p>
+  <p>Unofficial fan-made tool. Not affiliated with, endorsed by or connected to GolemLabs,
+     DreamCatcher Interactive or any current rights holder of SuperPower&nbsp;2.
+     No game data is distributed here &mdash; you supply your own files.</p>
+  <p><svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="1" fill="#0057b7"/><rect y="1" width="3" height="1" fill="#ffd700"/></svg>
+     Made in Ukraine.</p>
+</div></footer><script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.toc a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function mark(){
+    var y=window.scrollY+120,i=0;
+    for(var k=0;k<secs.length;k++){ if(secs[k]&&secs[k].offsetTop<=y) i=k; }
+    links.forEach(function(a,k){ a.classList.toggle('on',k===i); });
+  }
+  window.addEventListener('scroll',mark,{passive:true});
+  mark();
+})();
+</script>
+</body>
+</html>

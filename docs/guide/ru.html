@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SP2 DB Editor — guide (Русский)</title>
+<meta name="description" content="Всё, что умеет редактор, по порядку и со снимками экрана.">
+<meta property="og:title" content="SP2 DB Editor — guide (Русский)">
+<meta property="og:description" content="Всё, что умеет редактор, по порядку и со снимками экрана.">
+<meta property="og:type" content="website">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%234f8cff'/%3E%3Cg fill='%23fff'%3E%3Crect x='3' y='4' width='10' height='2' rx='.6'/%3E%3Crect x='3' y='7' width='10' height='2' rx='.6'/%3E%3Crect x='3' y='10' width='6' height='2' rx='.6'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/icons.css">
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="../index.html">SP2 DB Editor</a>
+  <nav>
+    <a href="../guide/index.html" class="on">Guide</a>
+    <a href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor">Source</a>
+    <a class="cta" href="http://editor.kraineuolek.com/super-power-2/">Open the editor</a>
+  </nav>
+</div></header>
+<div class="guide">
+<aside class="toc" aria-label="Contents"><ol><li><a href="#start">С чего начать</a></li><li><a href="#project">Ваш проект и ссылка на него</a></li><li><a href="#overview">Что показывает вкладка базы</a></li><li><a href="#table">Просмотр таблицы</a></li><li><a href="#edit">Правка строки</a></li><li><a href="#struct">Устройство таблицы</a></li><li><a href="#map">Карта мира</a></li><li><a href="#map-who">Кому что принадлежит</a></li><li><a href="#map-lang">Язык и религия</a></li><li><a href="#map-num">Правительство и числа</a></li><li><a href="#map-rel">Отношения и договоры</a></li><li><a href="#map-mil">Войска, ракеты, сила</a></li><li><a href="#map-edit">Правка прямо с карты</a></li><li><a href="#merge">Объединить страны</a></li><li><a href="#replace">Найти и заменить</a></li><li><a href="#check">Проверка базы</a></li><li><a href="#find">Глобальный поиск</a></li><li><a href="#log">Журнал изменений и откат</a></li><li><a href="#gst">Языковые файлы (.gst)</a></li><li><a href="#ui">Оформление</a></li><li><a href="#mobile">На телефоне</a></li><li><a href="#save">Забрать работу назад</a></li><li><a href="#safety">Чего он делать не станет</a></li></ol></aside>
+<main class="doc"><h1>SP2 DB Editor</h1><p class="lead">Всё, что умеет редактор, по порядку и со снимками экрана.</p><div class="langbar"><a href="en.html" hreflang="en">English</a><a href="de.html" hreflang="de">Deutsch</a><a href="es.html" hreflang="es">Español</a><a href="fr.html" hreflang="fr">Français</a><a href="it.html" hreflang="it">Italiano</a><a href="nl.html" hreflang="nl">Nederlands</a><a href="pt.html" hreflang="pt">Português</a><a href="uk.html" hreflang="uk">Українська</a><a href="ru.html" hreflang="ru" class="on">Русский</a></div><section id="start"><h2><i class="bi bi-rocket-takeoff" aria-hidden="true"></i>С чего начать</h2>
+<p>Редактор открывает файлы самой игры. Ничего не устанавливает и ничего не преобразует:
+    читает <code>DATABASE.GDB</code> — базу Firebird 1.5 — и текстовые файлы
+    <code>StringTable.*.gst</code> байт за байтом, одним лишь PHP.</p>
+<ol>
+     <li>Найдите файлы игры. Чистая установка держит их в
+       <code>SuperPower 2\Extras\</code>; мод держит свою копию в
+       <code>SuperPower 2\MODS\&lt;название мода&gt;\</code>.</li>
+     <li>Перетащите <code>DATABASE.GDB</code> на поле загрузки или щёлкните по нему и
+       выберите файл.</li>
+     <li>Перейдите на вкладку <strong>Языки</strong> и загрузите ещё и
+       <code>StringTable.*.gst</code>. Он не обязателен, но без него страны и города —
+       одни только числа.</li>
+   </ol>
+<p>Подойдёт и <code>.zip</code> с несколькими такими файлами сразу: база уйдёт в одну
+    вкладку, а каждый языковой файл — в другую.</p>
+<figure><img src="../assets/img/01-upload.webp" alt="Окно загрузки" width="1280" height="729" loading="lazy" decoding="async"><figcaption>Бросьте файл или щёлкните, чтобы выбрать. Полоса показывает мегабайты и скорость; страница откроется сама, как только загрузка дойдёт до конца.</figcaption></figure>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>Ваши файлы — копии. Оригиналы игры не трогаются никогда: в конце вы скачиваете себе исправленную копию.</p></div>
+</section>
+<section id="project"><h2><i class="bi bi-folder2-open" aria-hidden="true"></i>Ваш проект и ссылка на него</h2>
+<p>Никакой регистрации. Как только вы открыли страницу, вы получаете короткий код проекта,
+    и всё, что вы загрузите, живёт в отдельной папке. Двое могут загрузить каждый свой
+    <code>DATABASE.GDB</code> в одну и ту же минуту и не задеть работу друг друга.</p>
+<p>Код лежит в cookie, так что обычно о нём не думают. Он же стоит и в ссылке: сохраните
+    эту ссылку — и проект откроется на другом компьютере, на телефоне или после того, как
+    cookie стёрли. Найдёте его внизу левой панели и на главной, в блоке
+    <em>Ваш проект</em>.</p>
+<figure><img src="../assets/img/22-project.webp" alt="Окно проекта" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Ссылка на проект, код, сколько места он занимает, и кнопка, которая начинает пустой.</figcaption></figure>
+<p>Проект удаляется через семь дней после последнего посещения. <strong>Закрыть</strong>
+    намеренно убирает файл из проекта — копия всё равно остаётся в папке <code>backups</code>
+    этого проекта.</p>
+</section>
+<section id="overview"><h2><i class="bi bi-speedometer2" aria-hidden="true"></i>Что показывает вкладка базы</h2>
+<p>С открытой базой вы попадаете на сводку: сколько таблиц, строк и колонок, какие таблицы
+    самые большие, и быстрые переходы ко всему, что стоит сделать.</p>
+<figure><img src="../assets/img/02-overview.webp" alt="Сводка базы" width="1280" height="800" loading="lazy" decoding="async"><figcaption>В SuperPower 2 — 28 таблиц и около 62 800 строк. Зелёная пометка слева значит, что приложен языковой файл, поэтому числа показаны названиями.</figcaption></figure>
+</section>
+<section id="table"><h2><i class="bi bi-table" aria-hidden="true"></i>Просмотр таблицы</h2>
+<p>Выберите таблицу слева. Щёлкните заголовок колонки, чтобы упорядочить строки. Кнопка
+    <strong>Фильтр</strong> открывает строку полей под заголовками: наберите в одном — и
+    останутся только совпавшие строки.</p>
+<figure><img src="../assets/img/03-table.webp" alt="Таблица COUNTRY" width="1280" height="800" loading="lazy" decoding="async"><figcaption>COUNTRY, 194 строки и 86 колонок. Под NAME_STID редактор пишет настоящее название из языкового файла — сама база хранит лишь 2136.</figcaption></figure>
+<ul>
+     <li><span class="badge text-bg-secondary">IDX</span> помечает колонку, которой пользуются
+       индексы. Такие колонки только для чтения, и следующий раздел объясняет почему.</li>
+     <li><span class="badge text-bg-secondary">TXT</span> помечает колонку, которая указывает в
+       языковой файл. Название под числом берётся оттуда.</li>
+     <li>Большие таблицы идут страницами; размер страницы вы выбираете сами, внизу.</li>
+   </ul>
+</section>
+<section id="edit"><h2><i class="bi bi-pencil-square" aria-hidden="true"></i>Правка строки</h2>
+<p>Карандаш в начале строки открывает все её поля в одном окне. Там есть поиск, потому что
+    в иных таблицах больше двух сотен колонок. <strong>Сохранить</strong> пишет значения
+    прямо в <code>.gdb</code>.</p>
+<figure><img src="../assets/img/04-edit-row.webp" alt="Окно правки строки" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Каждое поле показывает свой тип, а текстовые колонки — ещё и строку из языкового файла. У NULL свой переключатель: пусто и «не задано» для игры разные вещи.</figcaption></figure>
+<div class="note"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i><p>Поля, на которых построены индексы — <code>ID</code> почти в каждой таблице SP2 — изменить нельзя. Индекс — это отдельное дерево ключей внутри файла: измените значение, не перестроив дерево, и игра начнёт читать не те строки. Добавление и удаление строк закрыты по той же причине.</p></div>
+</section>
+<section id="struct"><h2><i class="bi bi-diagram-3" aria-hidden="true"></i>Устройство таблицы</h2>
+<p><strong>Структура</strong> перечисляет колонки таблицы с их настоящими типами Firebird,
+    смещениями и доменами и указывает на те, что похожи на ссылки в другие таблицы. Выручает,
+    когда выясняете, что же на самом деле значит колонка.</p>
+<figure><img src="../assets/img/05-structure.webp" alt="Устройство COUNTRY" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Типы такие, какими их хранит сам Firebird. Столбец «Примечания» отмечает вероятные ссылки, участие в индексах и текстовые указатели.</figcaption></figure>
+<p>Тот же перечень есть и файлом: <em>Схема JSON</em> на левой панели отдаёт вам всю схему
+    для собственных сценариев.</p>
+</section>
+<section id="map"><h2><i class="bi bi-globe-americas" aria-hidden="true"></i>Карта мира</h2>
+<p>В базе нет никакой карты. SuperPower 2 хранит 2 604 региона и 3 347 городов, каждый город
+    с широтой и долготой, — поэтому редактор рисует регион как землю, которая ближе к его
+    собственным городам, чем к чьим-либо ещё, а потом обрезает получившееся настоящими
+    береговыми линиями и границами.</p>
+<p>Оттого очертания близки, но не точны, — и карта честно говорит об этом в строке под
+    картинкой. А совершенно точным выходит как раз то, что здесь важно: <em>какой регион кому
+    принадлежит</em>, прямо из той таблицы, которую вы правите.</p>
+</section>
+<section id="map-who"><h2><i class="bi bi-flag" aria-hidden="true"></i>Кому что принадлежит</h2>
+<figure><img src="../assets/img/06-map-country.webp" alt="Карта в цветах стран" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Каждый регион закрашен цветом владельца. В легенде самые крупные владельцы; остальные сворачиваются в «и ещё 180».</figcaption></figure>
+<p>Наведите на регион — и подсказка назовёт регион, его владельца и столицу. Тяните, чтобы
+    двигать, колесо приближает, а поле рядом со списком слоёв подсвечивает одну страну: так её
+    территория видна одним взглядом, вместе с кусками на других материках.</p>
+</section>
+<section id="map-lang"><h2><i class="bi bi-translate" aria-hidden="true"></i>Язык и религия</h2>
+<p>Список <strong>Раскрасить по</strong> вверху слева меняет то, что означают цвета. Язык и религия берутся из таблиц
+    <code>LANGUAGES</code> и <code>RELIGIONS</code>, где на каждый регион хранится доля для
+    каждого языка и каждой веры: карта рисует ту, чья доля больше.</p>
+<figure><img src="../assets/img/07-map-language.webp" alt="Преобладающий язык" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Преобладающий язык в каждом регионе.</figcaption></figure>
+<figure><img src="../assets/img/08-map-religion.webp" alt="Преобладающая религия" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Преобладающая религия в каждом регионе.</figcaption></figure>
+<p>Ещё два слоя показывают <em>долю</em> одного выбранного языка или веры градиентом — самый
+    быстрый способ найти регионы, о которых мод забыл.</p>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>Эти слои показывают данные игры, а не настоящий мир, — и в данных игры есть свои странности. Преобладающим языком Бразилии выходит английский, у Украины — русский. Именно это лежит в <code>DATABASE.GDB</code>, и теперь вы можете это увидеть и поправить.</p></div>
+</section>
+<section id="map-num"><h2><i class="bi bi-bar-chart" aria-hidden="true"></i>Правительство и числа</h2>
+<figure><img src="../assets/img/09-map-government.webp" alt="Тип правительства" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Тип правительства в каждой стране, из GVT_TYPE.</figcaption></figure>
+<p>Числовые слои — население, инфраструктура, уровень связи — берут один градиент, а в
+    легенде пишутся наименьшее, среднее и наибольшее значения. Шкала идёт по рангу, а не по
+    величине: иначе Китай и Индия расплющили бы всё остальное в один оттенок.</p>
+<figure><img src="../assets/img/10-map-population.webp" alt="Население" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Население по регионам. В легенде наименьшее, среднее и наибольшее значения.</figcaption></figure>
+</section>
+<section id="map-rel"><h2><i class="bi bi-arrow-left-right" aria-hidden="true"></i>Отношения и договоры</h2>
+<p>Возьмите <em>Отношения одной страны</em> и выберите страну: все прочие будут закрашены по
+    тому, как они к ней относятся, — от вражды через нейтралитет до союза, по таблице
+    <code>RELATIONS</code>.</p>
+<figure><img src="../assets/img/11-map-relations.webp" alt="Отношение к Соединённым Штатам" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Как мир относится к Соединённым Штатам. Выбранная страна остаётся в своём цвете.</figcaption></figure>
+<p><em>Участники договора</em> делают то же: выберите договор из
+    <code>TREATY</code> — и его участники засветятся.</p>
+<figure><img src="../assets/img/12-map-treaty.webp" alt="Участники НАТО" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Участники договора — здесь НАТО — против всех остальных.</figcaption></figure>
+</section>
+<section id="map-mil"><h2><i class="bi bi-shield" aria-hidden="true"></i>Войска, ракеты, сила</h2>
+<p>Меню <strong>Слои</strong> справа включает два набора точек: подразделения из
+    <code>UNITS</code> и ракеты из <code>MISSILE</code>, каждая нарисована там, где она, по
+    словам игры, стоит.</p>
+<figure><img src="../assets/img/13-map-layers-menu.webp" alt="Меню слоёв" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Войска и ракеты отдельными переключателями, поверх того, что показывают цвета.</figcaption></figure>
+<p><em>Всего единиц</em> складывает то, чем страна на самом деле владеет, и затеняет
+    страны по итогу: одним взглядом видно, кто в этой базе тяжеловес.</p>
+<figure><img src="../assets/img/14-map-force.webp" alt="Всего единиц" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Страны затенены по силе войск, которыми они владеют, а сверху — расположение подразделений и ракет.</figcaption></figure>
+<div class="note"><i class="bi bi-info-circle" aria-hidden="true"></i><p>В SuperPower 2 нет таблицы с названиями типов подразделений, поэтому редактор подписывает тип настоящим образцом из <code>DESIGN</code>, который его использует, — а не догадкой.</p></div>
+</section>
+<section id="map-edit"><h2><i class="bi bi-cursor" aria-hidden="true"></i>Правка прямо с карты</h2>
+<p>Карта — не картинка, а второй вход к тем же строкам.</p>
+<ul>
+     <li><strong>Щёлкните по региону</strong> — и его строка из <code>REGION</code> откроется в
+       привычном окне правки.</li>
+     <li><strong>Переключатель владельца</strong> в этом окне отдаёт регион другой стране
+       тут же.</li>
+     <li><strong>Shift + протягивание</strong> обводит рамкой несколько регионов и передаёт их
+       все одной стране за один шаг. Карта перерисовывается сразу, так что ошибка видна
+       немедленно, — а журнал изменений её откатит.</li>
+   </ul>
+</section>
+<section id="merge"><h2><i class="bi bi-diagram-2" aria-hidden="true"></i>Объединить страны</h2>
+<p>Объединение — самое тяжёлое действие: всё, что принадлежит одной стране, — регионы,
+    города, подразделения, ракеты, партии, договоры — переходит к другой, а страна-источник
+    выключается. Матрица отношений остаётся нетронутой. Так и собирают мод, в котором Югославия не распалась, или в котором на карте
+    двенадцать стран вместо ста девяноста четырёх.</p>
+<figure><img src="../assets/img/15-merge.webp" alt="Объединить страны" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Укажите страну-приёмник и присоединяемые страны; редактор перечислит, что именно переедет, прежде чем хоть что-то произойдёт.</figcaption></figure>
+<p>Ничего не двинется с места, пока вы не подтвердите, а всё объединение ложится в журнал
+    изменений одним шагом, который можно откатить.</p>
+</section>
+<section id="replace"><h2><i class="bi bi-arrow-repeat" aria-hidden="true"></i>Найти и заменить</h2>
+<p>По одной колонке за раз, с предпросмотром. Выберите таблицу и колонку, скажите, что
+    должно совпасть — равно, содержит, больше, пусто, — и что поставить вместо.
+    <strong>Предпросмотр</strong> показывает в точности, какие строки изменились бы и сколько
+    их.</p>
+<figure><img src="../assets/img/16-replace.webp" alt="Замена с предпросмотром" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Сперва предпросмотр: строки, которые изменились бы, до и после, с подсчётом.</figcaption></figure>
+</section>
+<section id="check"><h2><i class="bi bi-clipboard-check" aria-hidden="true"></i>Проверка базы</h2>
+<p>Проверка ищет только настоящие поломки, ничего не выдумывая:</p>
+<ul>
+     <li>ссылки на строки, которых нет;</li>
+     <li>текстовые указатели, которых не хватает в приложенном языковом файле;</li>
+     <li>активные страны совсем без регионов;</li>
+     <li>столицы, оказавшиеся в другой стране;</li>
+     <li>повторённые ключи и регионы без единого города.</li>
+   </ul>
+<figure><img src="../assets/img/17-check.webp" alt="Проверка базы" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Находки сгруппированы по виду. Каждая строка — ссылка прямо в ту строку, которую надо поправить.</figcaption></figure>
+<p>Её стоит прогонять после объединения или большой замены — и ещё раз перед тем, как нести
+    файл обратно в игру.</p>
+</section>
+<section id="find"><h2><i class="bi bi-binoculars" aria-hidden="true"></i>Глобальный поиск</h2>
+<p>Одно поле, все таблицы и ещё языковой файл. Наберите название — и получите строки, где
+    оно упомянуто, где бы они ни жили.</p>
+<figure><img src="../assets/img/18-find.webp" alt="Глобальный поиск" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Поиск «Poland» по всем таблицам и языковому файлу сразу.</figcaption></figure>
+</section>
+<section id="log"><h2><i class="bi bi-clock-history" aria-hidden="true"></i>Журнал изменений и откат</h2>
+<p>Каждая правка за этот сеанс — строка, замена, объединение, передача на карте —
+    записывается вместе со значениями, которые она вытеснила. <strong>Откатить</strong>
+    возвращает прежние значения на место.</p>
+<figure><img src="../assets/img/19-log.webp" alt="Журнал изменений" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Что изменилось, где, сколько ячеек — и «Откатить» рядом с каждым шагом.</figcaption></figure>
+<p>Сверх того, перед каждой отдельной правкой копия файла кладётся в папку
+    <code>backups</code> проекта. Журнал охватывает сеанс; копии лежат, пока жив проект.</p>
+</section>
+<section id="gst"><h2><i class="bi bi-translate" aria-hidden="true"></i>Языковые файлы (.gst)</h2>
+<p><code>.gst</code> — это указатель плюс глыба текста в UTF-16: именно там живёт каждое
+    название, которое игра вам показывает. Вкладка «Языки» перечисляет их все с поиском, а
+    строка правится прямо на месте.</p>
+<figure><img src="../assets/img/20-languages.webp" alt="Языковой файл" width="1280" height="800" loading="lazy" decoding="async"><figcaption>StringTable.english.gst — номера строк здесь это те самые числа, которые база держит в своих колонках *_STID.</figcaption></figure>
+<p>Открытыми могут быть несколько языковых файлов; именно тот, что вы выбрали, и берут таблицы базы,
+    когда подписывают названия под числами. Переименовать страну для всей игры — это одна строка
+    здесь, а не правка в базе.</p>
+</section>
+<section id="ui"><h2><i class="bi bi-palette" aria-hidden="true"></i>Оформление</h2>
+<p>Десять тем, свой цвет акцента и текста, десять шрифтов, размер и переключатель плотности.
+    Всё применяется в браузере и там же хранится, так что ничего не стоит и ходит за вами по
+    всему редактору.</p>
+<figure><img src="../assets/img/21-appearance.webp" alt="Окно оформления" width="1280" height="800" loading="lazy" decoding="async"><figcaption>Темы, акцент, шрифт и плотность, а внизу живой предпросмотр.</figcaption></figure>
+</section>
+<section id="mobile"><h2><i class="bi bi-phone" aria-hidden="true"></i>На телефоне</h2>
+<p>Раскладка сворачивается: перечень таблиц выезжает сбоку, панель действий переносится по
+    строкам, а карта берёт всю ширину — с движением пальцем и приближением двумя.</p>
+<figure><img src="../assets/img/23-mobile.webp" alt="Редактор на телефоне" width="414" height="860" loading="lazy" decoding="async"><figcaption>Тот же редактор шириной 414 пикселей.</figcaption></figure>
+</section>
+<section id="save"><h2><i class="bi bi-download" aria-hidden="true"></i>Забрать работу назад</h2>
+<p><strong>Скачать всё (.zip)</strong> вверху складывает базу и все открытые языковые файлы в
+    один архив — с теми самыми именами, которых ждёт игра, готовыми лечь обратно в
+    <code>Extras\</code> или в папку вашего мода. Отдельные файлы скачиваются по отдельности с левой
+    панели.</p>
+<p>Редактор никогда не пишет в вашу игру сам по себе.</p>
+</section>
+<section id="safety"><h2><i class="bi bi-shield-check" aria-hidden="true"></i>Чего он делать не станет</h2>
+<ul>
+     <li><strong>Индексные поля остаются только для чтения.</strong> Изменить <code>ID</code>,
+       не перестроив дерева индекса, значило бы тихо сломать файл, — а тихая поломка в базе,
+       которую игра читает каждый ход, худшая из всех.</li>
+     <li><strong>Строки не добавляются и не удаляются</strong> — по той же причине.</li>
+     <li><strong>Столбцы BLOB</strong> показаны как <code>[BLOB]</code> и остаются нетронутыми.</li>
+     <li><strong>Папки самого сервера недосягаемы.</strong> Открывать файлы прямо из папки игры
+       выключено — разве что вы запустили редактор дома и включили это своими руками.</li>
+   </ul>
+<p class="text-body-secondary mb-0">Всё остальное — ваше поле. Приятной работы.</p>
+</section>
+</main>
+</div>
+<footer><div class="wrap">
+  <p>MIT licence. Bundled third-party assets keep their own licences &mdash;
+     see <a href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor/blob/main/THIRD-PARTY-NOTICES.md">THIRD-PARTY-NOTICES</a>.</p>
+  <p>Unofficial fan-made tool. Not affiliated with, endorsed by or connected to GolemLabs,
+     DreamCatcher Interactive or any current rights holder of SuperPower&nbsp;2.
+     No game data is distributed here &mdash; you supply your own files.</p>
+  <p><svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="1" fill="#0057b7"/><rect y="1" width="3" height="1" fill="#ffd700"/></svg>
+     Made in Ukraine.</p>
+</div></footer><script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.toc a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function mark(){
+    var y=window.scrollY+120,i=0;
+    for(var k=0;k<secs.length;k++){ if(secs[k]&&secs[k].offsetTop<=y) i=k; }
+    links.forEach(function(a,k){ a.classList.toggle('on',k===i); });
+  }
+  window.addEventListener('scroll',mark,{passive:true});
+  mark();
+})();
+</script>
+</body>
+</html>
