@@ -1,0 +1,20 @@
+# Per-visitor project folders: uploaded DATABASE.GDB, StringTable.*.gst,
+# per-project settings and automatic backups. Never committed.
+/work/
+
+# Legacy backup folder from older versions
+/backups/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Never commit game data
+*.GDB
+*.gdb
+*.gst
+*.GST
