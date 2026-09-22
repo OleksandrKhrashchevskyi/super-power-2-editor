@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SP2 DB Editor — browser editor for the SuperPower 2 database</title>
+<meta name="description" content="Edit DATABASE.GDB and StringTable.*.gst from the browser: 28 tables, a world map with thirteen colourings, country merging, checks, search and undo. Pure PHP, no Firebird engine required.">
+<meta property="og:title" content="SP2 DB Editor — browser editor for the SuperPower 2 database">
+<meta property="og:description" content="Edit DATABASE.GDB and StringTable.*.gst from the browser: 28 tables, a world map with thirteen colourings, country merging, checks, search and undo. Pure PHP, no Firebird engine required.">
+<meta property="og:type" content="website">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%234f8cff'/%3E%3Cg fill='%23fff'%3E%3Crect x='3' y='4' width='10' height='2' rx='.6'/%3E%3Crect x='3' y='7' width='10' height='2' rx='.6'/%3E%3Crect x='3' y='10' width='6' height='2' rx='.6'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/icons.css">
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="index.html">SP2 DB Editor</a>
+  <nav>
+    <a href="guide/index.html">Guide</a>
+    <a href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor">Source</a>
+    <a class="cta" href="http://editor.kraineuolek.com/super-power-2/">Open the editor</a>
+  </nav>
+</div></header>
+<div class="hero"><div class="wrap">
+  <h1>Edit the SuperPower&nbsp;2 database in your browser</h1>
+  <p class="lead">SP2 DB Editor opens <code>DATABASE.GDB</code> and the
+     <code>StringTable.*.gst</code> text files, lets you change them, and hands them back
+     ready for the game.</p>
+  <p class="sub">Nothing to install. Your files are copies &mdash; the game's originals are never touched.</p>
+  <div class="btns">
+    <a class="btn btn-primary" href="http://editor.kraineuolek.com/super-power-2/">Open the editor</a>
+    <a class="btn" href="guide/index.html"><i class="bi bi-book" aria-hidden="true"></i>Read the guide</a>
+    <a class="btn" href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor"><i class="bi bi-github" aria-hidden="true"></i>Source on GitHub</a>
+  </div>
+</div></div>
+
+<div class="section"><div class="wrap">
+  <figure>
+    <img src="assets/img/02-overview.webp" alt="The database overview screen" width="1280" height="800" decoding="async">
+    <figcaption>28 tables, about 62,800 rows. The badge on the left means a language file is attached,
+      so numeric IDs are shown as real names.</figcaption>
+  </figure>
+</div></div>
+
+<div class="section"><div class="wrap">
+  <h2>What it does</h2>
+  <p class="intro">Everything below works on the file you upload, in the browser, with no game installed.</p>
+  <div class="cards">
+    <div class="card"><h3><i class="bi bi-table" aria-hidden="true"></i>Browse and edit</h3>
+      <p>All 28 tables with paging, filters and sorting. Edit any value that is not an index or a BLOB.</p></div>
+    <div class="card"><h3><i class="bi bi-globe-americas" aria-hidden="true"></i>World map</h3>
+      <p>Thirteen colourings &mdash; ownership, language, religion, government, relations, treaties,
+         troops, population. Click a region to edit it, drag to select many and hand them to another country.</p></div>
+    <div class="card"><h3><i class="bi bi-arrow-left-right" aria-hidden="true"></i>Merge countries</h3>
+      <p>Territory, troops, missiles, parties, designs, treaty membership and covert cells all move
+         together, with a preview before anything is written.</p></div>
+    <div class="card"><h3><i class="bi bi-translate" aria-hidden="true"></i>Language files</h3>
+      <p>Edit <code>StringTable.*.gst</code> dictionaries. With one open, tables show real names
+         instead of numeric STIDs.</p></div>
+    <div class="card"><h3><i class="bi bi-clipboard-check" aria-hidden="true"></i>Check and search</h3>
+      <p>Find genuinely broken references, missing capitals and duplicate IDs. Search all tables
+         and the game texts from one field.</p></div>
+    <div class="card"><h3><i class="bi bi-clock-history" aria-hidden="true"></i>Log and undo</h3>
+      <p>Every write is recorded with its previous values and can be put back. A copy of the file
+         is kept before each edit.</p></div>
+  </div>
+</div></div>
+
+<div class="section"><div class="wrap">
+  <h2>The map is built from the database</h2>
+  <p class="intro">The game stores no region geometry &mdash; only city coordinates and who owns what.
+     The map is rasterised from those, constrained by public-domain Natural Earth outlines.
+     Change an owner and it recolours at once.</p>
+  <figure>
+    <img src="assets/img/07-map-language.webp" alt="World map coloured by dominant language" width="1280" height="800" loading="lazy" decoding="async">
+    <figcaption>Dominant language per region. This view also exposes the game's own mistakes &mdash;
+      the dominant language of Brazil in the database is English.</figcaption>
+  </figure>
+</div></div>
+
+<div class="section"><div class="wrap">
+  <h2>Why it is written in PHP</h2>
+  <p class="intro">The database is a Firebird 1.5 file from January 2005. That engine exists only for
+     Windows, only 32-bit, so it cannot run on a Linux host at all. The editor therefore reads and
+     writes the file format directly: 4&nbsp;KB pages, slot tables, RLE records, and the schema taken
+     from the file's own system tables rather than hard-coded.</p>
+  <p class="intro">Everything was cross-checked against a real Firebird 1.5 engine on the same database.</p>
+  <div class="stats">
+    <div class="stat"><b>669,369</b><span>values read across 28 tables &mdash; 0 discrepancies</span></div>
+    <div class="stat"><b>1,382</b><span>values written back &mdash; the engine read exactly what PHP wrote</span></div>
+    <div class="stat"><b>1 of 16,684</b><span>values changed by a single-field edit in COUNTRY</span></div>
+  </div>
+</div></div>
+
+<div class="section"><div class="wrap">
+  <h2>Run your own copy</h2>
+  <p class="intro">Pure PHP 7.4+. No Firebird, no extensions, no Composer, no build step.
+     Copy the folder onto any host and open it.</p>
+  <pre><code>git clone https://github.com/OleksandrKhrashchevskyi/super-power-2-editor.git super-power-2
+cd super-power-2
+php -S 127.0.0.1:8000</code></pre>
+  <p class="intro" style="margin-top:18px">Only <code>work/</code> needs to be writable; the editor creates
+     everything else itself. Details, nginx notes and upload limits are in the
+     <a href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor#installation">README</a>.</p>
+</div></div>
+
+<div class="section"><div class="wrap">
+  <h2>Guide</h2>
+  <p class="intro">Twenty-three illustrated sections covering every screen, in nine languages.</p>
+  <div class="btns" style="justify-content:flex-start">
+    <a class="btn" href="guide/index.html"><i class="bi bi-book" aria-hidden="true"></i>Read the guide</a>
+  </div>
+</div></div>
+<footer><div class="wrap">
+  <p>MIT licence. Bundled third-party assets keep their own licences &mdash;
+     see <a href="https://github.com/OleksandrKhrashchevskyi/super-power-2-editor/blob/main/THIRD-PARTY-NOTICES.md">THIRD-PARTY-NOTICES</a>.</p>
+  <p>Unofficial fan-made tool. Not affiliated with, endorsed by or connected to GolemLabs,
+     DreamCatcher Interactive or any current rights holder of SuperPower&nbsp;2.
+     No game data is distributed here &mdash; you supply your own files.</p>
+  <p><svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="1" fill="#0057b7"/><rect y="1" width="3" height="1" fill="#ffd700"/></svg>
+     Made in Ukraine.</p>
+</div></footer>
+</body>
+</html>
