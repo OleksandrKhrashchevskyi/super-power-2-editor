@@ -380,7 +380,8 @@ function langbar(array $langs, string $current): string
 
 /* --------------------------------------------------------------- building */
 
-rm_rf($docs);
+foreach (["$docs/assets", "$docs/guide"] as $d) rm_rf($d);   // docs/app is built by tools/build-wasm.mjs
+@unlink("$docs/index.html");
 @mkdir("$docs/assets/img", 0777, true);
 @mkdir("$docs/assets/fonts", 0777, true);
 @mkdir("$docs/guide", 0777, true);
@@ -456,7 +457,8 @@ $landing = topbar('') . <<<HTML
      ready for the game.</p>
   <p class="sub">Nothing to install. Your files are copies &mdash; the game's originals are never touched.</p>
   <div class="btns">
-    <a class="btn btn-primary" href="{$live}">Open the editor</a>
+    <a class="btn btn-primary" href="app/index.html">Run it in your browser</a>
+    <a class="btn" href="{$live}">Open the hosted editor</a>
     <a class="btn" href="guide/index.html"><i class="bi bi-book" aria-hidden="true"></i>Read the guide</a>
     <a class="btn" href="{$repo}"><i class="bi bi-github" aria-hidden="true"></i>Source on GitHub</a>
   </div>
@@ -468,6 +470,25 @@ $landing = topbar('') . <<<HTML
     <figcaption>28 tables, about 62,800 rows. The badge on the left means a language file is attached,
       so numeric IDs are shown as real names.</figcaption>
   </figure>
+</div></div>
+
+<div class="section"><div class="wrap">
+  <h2>It runs without a server</h2>
+  <p class="intro">The same PHP that powers the hosted editor is compiled to WebAssembly and started
+     inside your tab. A service worker hands every request to it, so the editor behaves exactly as it
+     does on a server &mdash; except there is no server. Your database is never uploaded anywhere;
+     it is opened on your own machine.</p>
+  <div class="stats">
+    <div class="stat"><b>~7 MB</b><span>downloaded once, then cached by the browser</span></div>
+    <div class="stat"><b>1.4 s</b><span>to parse a 9.5 MB DATABASE.GDB in the browser</span></div>
+    <div class="stat"><b>identical</b><span>bytes written, checked against native PHP</span></div>
+  </div>
+  <p class="intro" style="margin-top:22px">Work lives in the tab only, so download your files before
+     closing it. For long sessions, or to share one instance with other people, use the
+     <a href="{$live}">hosted editor</a>.</p>
+  <div class="btns" style="justify-content:flex-start;margin-top:18px">
+    <a class="btn btn-primary" href="app/index.html">Run it in your browser</a>
+  </div>
 </div></div>
 
 <div class="section"><div class="wrap">
