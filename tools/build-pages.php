@@ -458,7 +458,6 @@ $landing = topbar('') . <<<HTML
   <p class="sub">Nothing to install. Your files are copies &mdash; the game's originals are never touched.</p>
   <div class="btns">
     <a class="btn btn-primary" href="app/index.html">Run it in your browser</a>
-    <a class="btn" href="{$live}">Open the hosted editor</a>
     <a class="btn" href="guide/index.html"><i class="bi bi-book" aria-hidden="true"></i>Read the guide</a>
     <a class="btn" href="{$repo}"><i class="bi bi-github" aria-hidden="true"></i>Source on GitHub</a>
   </div>
