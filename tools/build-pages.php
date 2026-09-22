@@ -15,7 +15,6 @@ declare(strict_types=1);
  * so re-run this script whenever the guide or the screenshots change.
  */
 
-const LIVE  = 'http://editor.kraineuolek.com/super-power-2/';
 const REPO  = 'https://github.com/OleksandrKhrashchevskyi/super-power-2-editor';
 const TITLE = 'SP2 DB Editor';
 
@@ -309,7 +308,7 @@ HTML;
 
 function topbar(string $base, string $here = ''): string
 {
-    $live = LIVE; $repo = REPO; $t = TITLE;
+    $repo = REPO; $t = TITLE;
     $g = $here === 'guide' ? ' class="on"' : '';
     return <<<HTML
 <header class="top"><div class="top-in">
@@ -317,7 +316,7 @@ function topbar(string $base, string $here = ''): string
   <nav>
     <a href="{$base}guide/index.html"{$g}>Guide</a>
     <a href="{$repo}">Source</a>
-    <a class="cta" href="{$live}">Open the editor</a>
+    <a class="cta" href="{$base}app/index.html">Open the editor</a>
   </nav>
 </div></header>
 HTML;
@@ -445,7 +444,7 @@ copy("$docs/guide/en.html", "$docs/guide/index.html");
 
 /* ---- landing page ---- */
 
-$live = LIVE; $repo = REPO;
+$repo = REPO;
 $d = fn(string $f) => isset($dims[$f]) ? ' width="' . $dims[$f][0] . '" height="' . $dims[$f][1] . '"' : '';
 
 $landing = topbar('') . <<<HTML
@@ -473,7 +472,7 @@ $landing = topbar('') . <<<HTML
 
 <div class="section"><div class="wrap">
   <h2>It runs without a server</h2>
-  <p class="intro">The same PHP that powers the hosted editor is compiled to WebAssembly and started
+  <p class="intro">The editor's own PHP is compiled to WebAssembly and started
      inside your tab. A service worker hands every request to it, so the editor behaves exactly as it
      does on a server &mdash; except there is no server. Your database is never uploaded anywhere;
      it is opened on your own machine.</p>
@@ -483,8 +482,8 @@ $landing = topbar('') . <<<HTML
     <div class="stat"><b>identical</b><span>bytes written, checked against native PHP</span></div>
   </div>
   <p class="intro" style="margin-top:22px">Work lives in the tab only, so download your files before
-     closing it. For long sessions, or to share one instance with other people, use the
-     <a href="{$live}">hosted editor</a>.</p>
+     closing it. To keep projects on a server and share one instance with other people, put your own
+     copy on a host &mdash; it is the same code, and it takes one folder.</p>
   <div class="btns" style="justify-content:flex-start;margin-top:18px">
     <a class="btn btn-primary" href="app/index.html">Run it in your browser</a>
   </div>
@@ -542,7 +541,7 @@ $landing = topbar('') . <<<HTML
 
 <div class="section"><div class="wrap">
   <h2>Run your own copy</h2>
-  <p class="intro">Pure PHP 7.4+. No Firebird, no extensions, no Composer, no build step.
+  <p class="intro">Pure PHP 7.4+. No Firebird, no extensions, no Composer, nothing to compile.
      Copy the folder onto any host and open it.</p>
   <pre><code>git clone {$repo}.git super-power-2
 cd super-power-2
