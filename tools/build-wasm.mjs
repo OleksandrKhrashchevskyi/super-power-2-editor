@@ -31,10 +31,13 @@ const write = (p, b) => { mk(path.dirname(p)); fs.writeFileSync(p, b); };
 /* ------------------------------------------------- collect editor sources */
 
 const SKIP = new Set(['work', 'docs', 'tools', 'node_modules', '.git', '.github', 'backups']);
+/* Project documentation is not part of the running editor; only files the PHP
+   actually reads are packed, so the pack cannot drift out of step with the docs. */
+const SKIP_ROOT_FILES = new Set(['README.md', 'CONTRIBUTING.md', 'THIRD-PARTY-NOTICES.md', 'LICENSE']);
 function collect(dir, prefix = '') {
   const files = [];
   for (const name of fs.readdirSync(dir).sort()) {
-    if (prefix === '' && SKIP.has(name)) continue;
+    if (prefix === '' && (SKIP.has(name) || SKIP_ROOT_FILES.has(name))) continue;
     if (name.startsWith('.')) continue;
     const abs = path.join(dir, name);
     const rel = prefix ? `${prefix}/${name}` : name;
