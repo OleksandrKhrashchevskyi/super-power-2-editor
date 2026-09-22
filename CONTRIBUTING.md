@@ -96,6 +96,19 @@ are picked up automatically. Page layout and the size list are in
 `assets/php/views/guide.php`. If a language file is missing or broken, the editor quietly
 falls back to English instead of failing.
 
+## The documentation site
+
+`docs/` is generated, never edited by hand. It holds the landing page and the guide as
+static HTML in all nine languages, and GitHub Pages serves it. After changing a guide
+file or a screenshot, regenerate it and commit the result:
+
+```bash
+php tools/build-pages.php
+```
+
+The generator rebuilds `docs/` from scratch, copies the screenshots and emits an icon
+stylesheet containing only the glyphs the site actually uses.
+
 ## Pull requests
 
 - One topic per PR.

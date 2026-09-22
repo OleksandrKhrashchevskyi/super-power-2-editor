@@ -8,6 +8,8 @@ host — Linux, Windows, PHP 7.4+.
 
 **Live instance:** <http://editor.kraineuolek.com/super-power-2/>
 
+**Guide and screenshots:** <https://oleksandrkhrashchevskyi.github.io/super-power-2-editor/>
+
 ---
 
 ## Why this exists
@@ -363,7 +365,18 @@ assets/guide/              guide text, one file per language (9)
 assets/img/guide/          guide screenshots (WebP)
 assets/lang/               interface translations (JSON)
 assets/vendor/             Bootstrap, icons, fonts, geodata
+tools/build-pages.php      generates the static site in docs/
+docs/                      the GitHub Pages site (generated - do not edit by hand)
 work/                      projects: work/<code>/ and work/<code>/backups/
+```
+
+`docs/` holds the landing page and the guide rendered as static HTML in all nine
+languages, published at the address above. It is built from the same
+`assets/guide/*.php` and screenshots the editor itself uses, so after changing either,
+regenerate it:
+
+```bash
+php tools/build-pages.php
 ```
 
 ---
