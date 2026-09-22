@@ -270,9 +270,17 @@ Copy the contents of this repository into a folder on your host, for example
 git clone https://github.com/<your-account>/super-power-2-editor.git super-power-2
 ```
 
+The editor itself is `index.php`, `assets/` and `guide/` — about 3.4 MB. The `docs/` and
+`tools/` folders only build the documentation site and the in-browser edition, so they can
+be left off a PHP host:
+
+```
+rm -rf super-power-2/docs super-power-2/tools
+```
+
 Requirements:
 
-- PHP 7.4 or newer (the live instance runs 8.5), no extensions needed;
+- PHP 7.4 or newer, no extensions needed;
 - write access to the `work/` subfolder — the editor creates everything else itself.
 
 ### Upload limits

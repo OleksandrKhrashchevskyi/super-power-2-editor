@@ -11,8 +11,10 @@ cd super-power-2-editor
 php -S 127.0.0.1:8000
 ```
 
-Open <http://127.0.0.1:8000/>. PHP 7.4+ is enough; no extensions, no Composer, no build
-step. The `work/` folder is created on first request and is git-ignored.
+Open <http://127.0.0.1:8000/>. PHP 7.4+ is enough; no extensions, no Composer, nothing to
+compile. The `work/` folder is created on first request and is git-ignored. The scripts in
+`tools/` build the documentation site and the in-browser edition; the editor itself never
+needs them.
 
 If you run it only for yourself, you can set `LOCAL_MODE = true` in
 `assets/php/config.php` to enable the "Game folder" field and open files straight from
@@ -37,8 +39,9 @@ data. Describe the case instead, or link to the mod.
 The existing code is plain, procedural PHP with `declare(strict_types=1)`, four-space
 indentation and no framework. Please match it rather than introducing a new style.
 
-- No Composer dependencies and no build step. Third-party front-end assets are vendored
-  into `assets/vendor/` so the page makes zero network requests — keep it that way.
+- No Composer dependencies, and nothing about the editor is compiled: what is in `assets/`
+  is what runs. Third-party front-end assets are vendored into `assets/vendor/` so the page
+  makes zero network requests — keep it that way.
 - No PHP extension requirements. ZIP, Firebird parsing and `.gst` handling are all done
   in pure PHP on purpose, because the target is cheap shared hosting.
 - User-visible strings go through `t()` so they can be translated.
