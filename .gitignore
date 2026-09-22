@@ -18,3 +18,8 @@ Thumbs.db
 *.gdb
 *.gst
 *.GST
+
+# Build tooling for the in-browser edition (tools/build-wasm.mjs)
+/node_modules/
+/package.json
+/package-lock.json

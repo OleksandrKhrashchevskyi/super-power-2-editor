@@ -10,6 +10,8 @@ host — Linux, Windows, PHP 7.4+.
 
 **Guide and screenshots:** <https://oleksandrkhrashchevskyi.github.io/super-power-2-editor/>
 
+**Run it in your browser, no server:** <https://oleksandrkhrashchevskyi.github.io/super-power-2-editor/app/>
+
 ---
 
 ## Why this exists
@@ -223,6 +225,44 @@ they come from the game's own dictionary, `StringTable.<language>.gst`.
 
 ---
 
+## Running without a server
+
+The same PHP is also compiled to WebAssembly and shipped as a static page, so the editor
+runs inside the browser tab with no host at all:
+
+<https://oleksandrkhrashchevskyi.github.io/super-power-2-editor/app/>
+
+A service worker hands every request under `app/run/` to that in-browser PHP, which serves
+the editor from a virtual filesystem. The PHP source is used **unchanged** &mdash; the build
+only packs it up.
+
+Measured on the vanilla 9.5 MB `DATABASE.GDB` in Chromium:
+
+| | |
+| --- | --- |
+| PHP interpreter | 17.5 MB, about 7 MB over the wire, cached after the first visit |
+| Interpreter start | 0.3 s |
+| Parse the whole database | 1.4 s, 8 MB peak |
+| Page render | 15&ndash;70 ms |
+| Reading | same fingerprint over all 669,369 values as native PHP |
+| Writing | downloaded file byte-identical to the one native PHP produces |
+
+Limits worth knowing:
+
+- **Nothing survives a reload.** The virtual filesystem lives in the tab, so download your
+  files before closing it. The hosted instance is the one to use for long sessions.
+- Needs a service worker, so it will not run in browsers or private windows that block them.
+- Untested on iOS, where per-tab memory is tight; a 40 MB modded database may not fit.
+
+To rebuild it:
+
+```bash
+npm install @php-wasm/universal @php-wasm/web @php-wasm/web-8-3 esbuild
+node tools/build-wasm.mjs
+```
+
+---
+
 ## Installation
 
 Copy the contents of this repository into a folder on your host, for example
@@ -366,6 +406,7 @@ assets/img/guide/          guide screenshots (WebP)
 assets/lang/               interface translations (JSON)
 assets/vendor/             Bootstrap, icons, fonts, geodata
 tools/build-pages.php      generates the static site in docs/
+tools/build-wasm.mjs       packs the editor to run in the browser (docs/app/)
 docs/                      the GitHub Pages site (generated - do not edit by hand)
 work/                      projects: work/<code>/ and work/<code>/backups/
 ```

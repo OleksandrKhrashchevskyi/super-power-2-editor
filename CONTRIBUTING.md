@@ -109,6 +109,22 @@ php tools/build-pages.php
 The generator rebuilds `docs/` from scratch, copies the screenshots and emits an icon
 stylesheet containing only the glyphs the site actually uses.
 
+## The in-browser edition
+
+`docs/app/` holds the editor compiled to run without a server: PHP as WebAssembly, a service
+worker that routes requests to it, and the editor packed into one JSON file. It is generated
+too, and it uses the PHP source unchanged &mdash; so a change to the editor reaches it with a
+rebuild, not with an edit:
+
+```bash
+npm install @php-wasm/universal @php-wasm/web @php-wasm/web-8-3 esbuild
+node tools/build-wasm.mjs
+```
+
+If you change anything in `assets/php/`, rebuild and check the browser build still works: open
+a database, browse a table, open the map, make one edit and download the file. The downloaded
+bytes must match what native PHP produces for the same edit.
+
 ## Pull requests
 
 - One topic per PR.
